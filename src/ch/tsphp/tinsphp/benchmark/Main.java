@@ -22,6 +22,7 @@ public class Main
                 "-d", "\"D:\\tins-benchmark\\tmp\"",
                 "\"D:\\tins-benchmark\\src\\Test.java\"");
         builder2.redirectErrorStream(true);
+        boolean ok = true;
         for (int i = 0; i < 1; ++i) {
             long start = System.nanoTime();
             Process process;
@@ -33,6 +34,7 @@ public class Main
             int errCode = process.waitFor();
             long stop = System.nanoTime();
             if (writeOutput(writer1, writer2, i, start, stop, process, errCode)) {
+                ok = false;
                 break;
             }
             File file;
@@ -44,10 +46,15 @@ public class Main
             file.delete();
         }
         writer1.close();
-        System.out.println("tests done");
+        if (ok) {
+            System.out.println("tests done");
+        } else {
+            System.out.println("test aborted");
+        }
     }
 
-    private static boolean writeOutput(PrintWriter writer1, PrintWriter writer2, int i, long start, long stop, Process process,
+    private static boolean writeOutput(PrintWriter writer1, PrintWriter writer2, int i, long start, long stop,
+            Process process,
             int errCode) throws IOException {
         if (errCode == 0) {
             if (i % 2 == 0) {
@@ -72,11 +79,10 @@ public class Main
     private static void writeToErr(InputStream inputStream) throws IOException {
         BufferedReader br = null;
         try {
-            String lineSeparator = System.getProperty("line.separator");
             br = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             while ((line = br.readLine()) != null) {
-                System.err.println(line + lineSeparator);
+                System.err.println(line);
             }
         } finally {
             if (br != null) {
