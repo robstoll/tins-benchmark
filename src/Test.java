@@ -1,7 +1,8 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "UnusedDeclaration"})
 public class Test
 {
 
@@ -189,6 +190,11 @@ public class Test
             return 1;
         }
         return false;
+    }
+
+    public static Object myStrPos2(Object $haystack, Object $needle, Object $limit) {
+        mod($limit, 20);
+        return myStrPos($haystack, $needle);
     }
 
     public static Object myStrRpos(Object $haystack, Object $needle) {
@@ -510,246 +516,398 @@ public class Test
         return $array;
     }
 
-////10 -----------
-//
-//    /**
-//     * adapted from
-//     * http://webdeveloperplus.com/php/21-really-useful-handy-php-code-snippets/
-//     */
-//    public static readable_random_string($length) {
-//        $conso=array("b","c","d","f","g","h","j","k","l",
-//                "m","n","p","r","s","t","v","w","x","y","z");
-//        $vocal=array("a","e","i","o","u");
-//        $password="";
-//        mySRand((double)myMicrotime()*1000000);
-//        $max = $length/2;
-//
-//        for($i=1; $i <= $max; $i++) {
-//            $password .= $conso[myRand(0,19)];
-//            $password .= $vocal[myRand(0,4)];
-//        }
-//
-//        return $password;
-//    }
-//
-//    /**
-//     * adapted from
-//     * http://webdeveloperplus.com/php/21-really-useful-handy-php-code-snippets/
-//     */
-//    public static generate_rand($l) {
-//        $c= ["A","B","C","D","E","F","G","H","I","J","K", "L","M",
-//                "N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
-//                "a","b","c","d","e","f","g","h","i","j","k","l","m",
-//                "n","o","p","q","r","s","t","u","v","w","x","y","z",
-//                "0","1","2","3","4","5","6","7","8","9"];
-//        mySRand((double)myMicrotime()*1000000);
-//        $rand = "";
-//        for($i=0; $i<$l; $i++) {
-//            $rand.= $c[myRand(0,1)%myCount($c)];
-//        }
-//        return $rand;
-//    }
-//
-//    /**
-//     * adapted from
-//     * http://webdeveloperplus.com/php/21-really-useful-handy-php-code-snippets/
-//     */
-//    public static encode_email($email, $linkText, $attrs) {
-//        $email = str_replace("@", "&#64;", $email);
-//        $email = str_replace(".", "&#46;", $email);
-//        $email = myStrSplit($email, 5);
-//
-//        $linkText = str_replace("@", "&#64;", $linkText);
-//        $linkText = str_replace(".", "&#46;", $linkText);
-//        $linkText = myStrSplit($linkText, 5);
-//
-//        $part1 = "<a href="ma";
-//        $part2 = "ilto&#58;";
-//        $part3 = "" ". $attrs ." >";
-//        $part4 = "</a>";
-//
-//        $encoded = "<script type="text/javascript">";
-//        $encoded .= "document.write(\"".$part1."\");";
-//        $encoded .= "document.write(\"".$part2."\");";
-//
-//        foreach(myStrSplit($email, 1) as $e)
-//        {
-//            $encoded .= "document.write(\"".$e."\");";
-//        }
-//
-//        $encoded .= "document.write(\"".$part3."\");";
-//        foreach(myStrSplit($linkText, 1) as $l)
-//        {
-//            $encoded .= "document.write(\"".$l."\");";
-//        }
-//
-//        $encoded .= "document.write(\"".$part4."\");";
-//        $encoded .= "</script>";
-//
-//        return $encoded;
-//    }
-//
-//    /**
-//     * adapted from
-//     * http://webdeveloperplus.com/php/21-really-useful-handy-php-code-snippets/
-//     */
-//    public static show_gravatar($email, $size, $default, $rating)
-//    {
-//        echo "<img src="http://www.gravatar.com/avatar.php?gravatar_id=".asStringReturnString($email).
-//        "&default=".$default."&size=".$size."&rating=".$rating."" width="".$size."px"
-//        height="".$size."px" />";
-//        return null;
-//    }
-//
-//
-//    // Original PHP code by Chirp Internet: www.chirp.com.au
-//// Please acknowledge use of this code by including this header.
-//    public static myTruncate($string, $limit, $break=".", $pad="...") {
-//        // return with no change if string is shorter than $limit
-//        if(myStrLen($string) <= $limit)
-//            return $string;
-//
-//        // is $break present between $limit and the end of the string?
-//        if(false !== ($breakpoint = myStrPos($string, $break, $limit))) {
-//            if($breakpoint < myStrLen($string) - 1) {
-//                $string = mySubstr($string, 0, $breakpoint) . $pad;
-//            }
-//        }
-//        return $string;
-//    }
-//
-//    /**
-//     * adapted from https://github.com/stephenharris/Event-Organiser/blob/master/includes/event-organiser-utility
-// -public statics.php
-//     */
-//    public static eo_php2xdate($phpformat="") {
-//        $php2xdate = array(
-//                "Y"=>"yyyy","y"=>"yy","L"=>""/*Not Supported*/,"o"=>"I",
-//                "j"=>"d","d"=>"dd","D"=>"ddd","l"=>"dddd","N"=>"", /*NS*/ "S"=>"S",
-//                "w"=>"", /*NS*/ "z"=>"",/*NS*/ "W"=>"w",
-//                "F"=>"MMMM","m"=>"MM","M"=>"MMM","n"=>"M","t"=>"",/*NS*/
-//                "a"=>"tt","A"=>"TT",
-//                "B"=>"",/*NS*/"g"=>"h","G"=>"H","h"=>"hh","H"=>"HH","u"=>"fff",
-//                "i"=>"mm","s"=>"ss",
-//                "O"=>"zz ", "P"=>"zzz",
-//                "c"=>"u"
-//        );
-//
-//        $xdateformat="";
-//        for($i=0;  $i< myStrLen($phpformat); $i++) {
-//            //Handle backslash excape
-//            if($phpformat[$i]=="\\") {
-//                $xdateformat .= """.$phpformat[$i+1].""";
-//                $i++;
-//                continue;
-//            }
-//            if(myIsset($php2xdate[$phpformat[$i]])) {
-//                $xdateformat .= $php2xdate[$phpformat[$i]];
-//            }else{
-//                $xdateformat .= $phpformat[$i];
-//            }
-//        }
-//        return $xdateformat;
-//    }
-//
-//    /**
-//     * adapted from https://gist.github.com/ev3rywh3re/4573482
-//     */
-//    public static fnbx_html_tag( $html ) {
-//
-//        if ( myEmpty( $html ) ) return;
-//
-//        $attributes = "";
-//        $composite = "";
-//        $spacer = "";
-//        if ( !myIsset( $html["return"] ) ) $html["return"] = false;
-//        $reserved = array(
-//                "tag", "tag_type", "attributes", "tag_content", "tag_content_before", "tag_content_after", "return"
-//        );
-//
-//        foreach ( $html as $name => $option ) {
-//            if ( myInArray( $name, $reserved ) ) continue;
-//            $attributes .= $name . "="" . $option . "" ";
-//        }
-//
-//        if ( myIsset( $html["attributes"] ) ) $attributes .= $html["attributes"] . " " . $attributes;
-//
-//        if ( $attributes != "" ) {
-//            $attributes = myRTrim( $attributes );
-//            $spacer = " ";
-//        }
-//
-//        if ( !myIsset( $html["tag_type"] ) ) $html["tag_type"] = "default";
-//
-//        if ( myIsset( $html["tag_content_before"] ) ) $composite .= $html["tag_content_before"];
-//
-//        $tmp = $html["tag_type"];
-//        if($tmp  == "single" ) {
-//            if ( myIsset( $html["tag_content"] ) ) $composite .= $html["tag_content"];
-//            if ( myIsset( $html["tag"] ) ) $composite .= "<" . $html["tag"] . $spacer . $attributes . "/>";
-//        } else if($tmp == "open") {
-//            if ( myIsset( $html["tag"] ) ) $composite .= "<" . $html["tag"] . $spacer . $attributes . ">";
-//            if ( myIsset( $html["tag_content"] ) ) $composite .= $html["tag_content"];
-//
-//        } else if($tmp == "close") {
-//            if ( myIsset( $html["tag_content"] ) ) $composite .= $html["tag_content"];
-//            if ( myIsset( $html["tag"] ) ) $composite .= "</" . $html["tag"] . ">";
-//        } else if($tmp ==  "attributes") {
-//            $composite = $attributes;
-//        } else {
-//            if ( myIsset( $html["tag"] ) ) $composite .= "<" . $html["tag"] . $spacer . $attributes . ">";
-//            if ( myIsset( $html["tag_content"] ) ) $composite .= $html["tag_content"];
-//            if ( myIsset( $html["tag"] ) ) $composite .= "</" . $html["tag"] . ">";
-//        }
-//
-//        if ( myIsset( $html["tag_content_after"] ) ) $composite .= $html["tag_content_after"];
-//
-//        if ( $html["return"] == true ) return $composite ;
-//
-//        echo $composite;
-//        return null;
-//    }
-//
-//    /*
-//     * adapted from https://github.com/stephenharris/Event-Organiser/blob/master/includes/event-organiser-utility
-// -public statics.php
-//     */
-//    public static _eventorganiser_remove_duplicates( $array=array() ) {
-//    //Do we need to worry about the myTimes of the date-myTime objects?
-//    if( myEmpty($array) )
-//        return $array;
-//    $unique = array();
-//    foreach ($array as $key=>$object) {
-//        if( !myInArray($object, $unique) )
-//            $unique[$key] = $object;
-//    }
-//    return $unique;
-//}
-//
-//    /*
-//     * adapted from https://github.com/stephenharris/Event-Organiser/blob/master/includes/event-organiser-utility
-// -public statics.php
-//     */
-//    public static _eventorganiser_compare_datemyTime( $date1, $date2 ) {
-//
-//        if ( $date1 == $date2 ) {
-//            return 0;
-//        } else if ( $date1 > $date2 ) {
-//            return 1;
-//        } else {
-//            return -1;
-//        }
-//
-//    }
-//
-//    /*
-//     * copied from https://developer.wordpress.org/reference/public statics/absint/
-//     */
-//    public static absint( $maybeint ) {
-//        return abs( (int) $maybeint );
-//    }
-//
-////20 ----------------------------
+//10 -----------
+
+    /**
+     * adapted from
+     * http://webdeveloperplus.com/php/21-really-useful-handy-php-code-snippets/
+     */
+    public static String readable_random_string(Object $length) {
+        Map $conso = new HashMap();
+        $conso.put(0, "b");
+        $conso.put(1, "c");
+        $conso.put(2, "d");
+        $conso.put(3, "f");
+        $conso.put(4, "g");
+        $conso.put(5, "h");
+        $conso.put(6, "j");
+        $conso.put(7, "k");
+        $conso.put(8, "l");
+        $conso.put(9, "m");
+        $conso.put(10, "n");
+        $conso.put(11, "p");
+        $conso.put(12, "r");
+        $conso.put(13, "s");
+        $conso.put(14, "t");
+        $conso.put(15, "v");
+        $conso.put(16, "w");
+        $conso.put(17, "x");
+        $conso.put(18, "y");
+        $conso.put(19, "z");
+        Map $vocal = new HashMap();
+        $vocal.put(0, "a");
+        $vocal.put(1, "e");
+        $vocal.put(2, "i");
+        $vocal.put(3, "o");
+        $vocal.put(4, "u");
+        String $password = "";
+        mySRand(Double.parseDouble(myMicrotime()) * 1000000);
+        Object $max = oldSchoolDivide($length, 2);
+
+        for (int $i = 1; ((Comparable) $i).compareTo($max) <= 0; $i++) {
+            $password += $conso.get(myRand(0, 19));
+            $password += $vocal.get(myRand(0, 4));
+        }
+
+        return $password;
+    }
+
+    /**
+     * adapted from
+     * http://webdeveloperplus.com/php/21-really-useful-handy-php-code-snippets/
+     */
+    public static String generate_rand(Object $l) {
+        Map $c = new HashMap();
+        $c.put(0, "A");
+        $c.put(1, "B");
+        $c.put(2, "C");
+        $c.put(3, "D");
+        $c.put(4, "E");
+        $c.put(5, "F");
+        $c.put(6, "G");
+        $c.put(7, "H");
+        $c.put(8, "I");
+        $c.put(9, "J");
+        $c.put(10, "K");
+        $c.put(11, "L");
+        $c.put(12, "M");
+        $c.put(13, "N");
+        $c.put(14, "O");
+        $c.put(15, "P");
+        $c.put(16, "Q");
+        $c.put(17, "R");
+        $c.put(18, "S");
+        $c.put(19, "T");
+        $c.put(20, "U");
+        $c.put(21, "V");
+        $c.put(22, "W");
+        $c.put(23, "X");
+        $c.put(24, "Y");
+        $c.put(25, "Z");
+        $c.put(26, "a");
+        $c.put(27, "b");
+        $c.put(28, "c");
+        $c.put(29, "d");
+        $c.put(30, "e");
+        $c.put(31, "f");
+        $c.put(32, "g");
+        $c.put(33, "h");
+        $c.put(34, "i");
+        $c.put(35, "j");
+        $c.put(36, "k");
+        $c.put(37, "l");
+        $c.put(38, "m");
+        $c.put(39, "n");
+        $c.put(40, "o");
+        $c.put(41, "p");
+        $c.put(42, "q");
+        $c.put(43, "r");
+        $c.put(44, "s");
+        $c.put(45, "t");
+        $c.put(46, "u");
+        $c.put(47, "v");
+        $c.put(48, "w");
+        $c.put(49, "x");
+        $c.put(50, "y");
+        $c.put(51, "z");
+        $c.put(52, "0");
+        $c.put(53, "1");
+        $c.put(54, "2");
+        $c.put(55, "3");
+        $c.put(56, "4");
+        $c.put(57, "5");
+        $c.put(58, "6");
+        $c.put(59, "7");
+        $c.put(60, "8");
+        $c.put(61, "9");
+        mySRand(Double.parseDouble(myMicrotime()) * 1000000);
+        String $rand = "";
+        for (int $i = 0; ((Comparable) $i).compareTo($l) < 0; $i++) {
+            $rand += $c.get(myRand(0, 1) % myCount($c));
+        }
+        return $rand;
+    }
+
+    /**
+     * adapted from
+     * http://webdeveloperplus.com/php/21-really-useful-handy-php-code-snippets/
+     */
+    public static String encode_email(Object $email, Object $linkText, Object $attrs) {
+        $email = str_replace("@", "&#64;", $email);
+        $email = str_replace(".", "&#46;", $email);
+        $email = myStrSplit($email, 5);
+
+        $linkText = str_replace("@", "&#64;", $linkText);
+        $linkText = str_replace(".", "&#46;", $linkText);
+        $linkText = myStrSplit($linkText, 5);
+
+        String $part1 = "<a href=\" ma ";
+        String $part2 = "ilto&#58;";
+        String $part3 = "\" " + String.valueOf($attrs) + " > ";
+        String $part4 = "</a>";
+
+        String $encoded = "<script type=\" text / javascript \">";
+        $encoded += "document.write(\"" + $part1 + "\");";
+        $encoded += "document.write(\"" + $part2 + "\");";
+
+        for (Object $e : ((Map) myStrSplit($email, 1)).values()) {
+            $encoded += "document.write(\"" + String.valueOf($e) + "\");";
+        }
+
+        $encoded += "document.write(\"" + $part3 + "\");";
+        for (Object $l : ((Map) myStrSplit($linkText, 1)).values()) {
+            $encoded += "document.write(\"" + String.valueOf($l) + "\");";
+        }
+
+        $encoded += "document.write(\"" + $part4 + "\");";
+        $encoded += "</script>";
+
+        return $encoded;
+    }
+
+    /**
+     * adapted from
+     * http://webdeveloperplus.com/php/21-really-useful-handy-php-code-snippets/
+     */
+    public static Void show_gravatar(Object $email, Object $size, Object $default, Object $rating) {
+        System.out.println("<img src=\" http://www.gravatar.com/avatar.php?gravatar_id=" + String.valueOf($email)
+                + "&default=" + String.valueOf($default)
+                + "&size=" + String.valueOf($size)
+                + "&rating=" + String.valueOf($rating) + "\" "
+                + "width = \"" + String.valueOf($size) + "px\" height = \"" + String.valueOf($size) + "px\" / > ");
+        return null;
+    }
+
+
+    // Original PHP code by Chirp Internet: www.chirp.com.au
+// Please acknowledge use of this code by including this header.
+    public static Object myTruncate(Object $string, Object $limit, Object $break, Object $pad) {
+        // return with no change if string is shorter than $limit
+        if (((Comparable) myStrLen($string)).compareTo($limit) <= 0) {
+            return $string;
+        }
+
+        Object $breakpoint;
+        // is $break present between $limit and the end of the string?
+        if (false != ($breakpoint = myStrPos2($string, $break, $limit))) {
+            if (((Comparable) $breakpoint).compareTo(myStrLen($string) - 1) < 0) {
+                $string = String.valueOf(mySubstr($string, 0, $breakpoint)) + $pad;
+            }
+        }
+        return $string;
+    }
+
+    /**
+     * adapted from https://github.com/stephenharris/Event-Organiser/blob/master/includes/event-organiser-utility
+     * -public statics.php
+     */
+    public static String eo_php2xdate(Object $phpformat) {
+        Map $php2xdate = new HashMap();
+        $php2xdate.put("Y", "yyyy");
+        $php2xdate.put("y", "yy");
+        $php2xdate.put("L", ""/*Not Supported*/);
+        $php2xdate.put("o", "I");
+        $php2xdate.put("j", "d");
+        $php2xdate.put("d", "dd");
+        $php2xdate.put("D", "ddd");
+        $php2xdate.put("l", "dddd");
+        $php2xdate.put("N", "" /*NS*/);
+        $php2xdate.put("S", "S");
+        $php2xdate.put("w", "" /*NS*/);
+        $php2xdate.put("z", "" /*NS*/);
+        $php2xdate.put("W", "w");
+        $php2xdate.put("F", "MMMM");
+        $php2xdate.put("m", "MM");
+        $php2xdate.put("M", "MMM");
+        $php2xdate.put("n", "M");
+        $php2xdate.put("t", ""/*NS*/);
+        $php2xdate.put("a", "tt");
+        $php2xdate.put("A", "TT");
+        $php2xdate.put("B", ""/*NS*/);
+        $php2xdate.put("g", "h");
+        $php2xdate.put("G", "H");
+        $php2xdate.put("h", "hh");
+        $php2xdate.put("H", "HH");
+        $php2xdate.put("u", "fff");
+        $php2xdate.put("i", "mm");
+        $php2xdate.put("s", "ss");
+        $php2xdate.put("O", "zz ");
+        $php2xdate.put("P", "zzz");
+        $php2xdate.put("c", "u");
+
+        String $xdateformat = "";
+        for (int $i = 0; $i < myStrLen($phpformat); $i++) {
+            //Handle backslash excape
+            if (String.valueOf($phpformat).charAt($i) == '\\') {
+                $xdateformat += "\" " + String.valueOf($phpformat).charAt($i + 1) + " \"";
+                $i++;
+                continue;
+            }
+            if (myIsset($php2xdate.get(String.valueOf($phpformat).charAt($i)))) {
+                $xdateformat += $php2xdate.get(String.valueOf($phpformat).charAt($i));
+            } else {
+                $xdateformat += String.valueOf($phpformat).charAt($i);
+            }
+        }
+        return $xdateformat;
+    }
+
+    /**
+     * adapted from https://gist.github.com/ev3rywh3re/4573482
+     */
+    public static String fnbx_html_tag(Map $html) {
+
+        if (myEmpty($html)) {
+            return null;
+        }
+
+        String $attributes = "";
+        String $composite = "";
+        String $spacer = "";
+        if (!myIsset($html.get("return"))) {
+            $html.put("return", false);
+        }
+        Map $reserved = new HashMap();
+        $reserved.put(1, "tag");
+        $reserved.put(2, "tag_type");
+        $reserved.put(3, "attributes");
+        $reserved.put(4, "tag_content");
+        $reserved.put(5, "tag_content_before");
+        $reserved.put(6, "tag_content_after");
+        $reserved.put(7, "return");
+
+        Set<Map.Entry> set = $html.entrySet();
+        for (Map.Entry<Object, Object> entry : set) {
+            Object $name = entry.getKey();
+            Object $option = entry.getValue();
+            if (myInArray($name, $reserved)) {
+                continue;
+            }
+            $attributes += $name + "=\" " + String.valueOf($option) + " \" ";
+        }
+
+        if (myIsset($html.get("attributes"))) {
+            $attributes += String.valueOf($html.get("attributes")) + " " + $attributes;
+        }
+
+
+        if (!$attributes.equals("")) {
+            $attributes = myRTrim($attributes);
+            $spacer = " ";
+        }
+
+        if (!myIsset($html.get("tag_type"))) {
+            $html.put("tag_type", "default");
+        }
+
+        if (myIsset($html.get("tag_content_before"))) {
+            $composite += $html.get("tag_content_before");
+        }
+
+        Object $tmp = $html.get("tag_type");
+        if ($tmp == "single") {
+            if (myIsset($html.get("tag_content"))) {
+                $composite += String.valueOf($html.get("tag_content"));
+            }
+            if (myIsset($html.get("tag"))) {
+                $composite += "<" + String.valueOf($html.get("tag")) + $spacer + $attributes + "/>";
+            }
+        } else if ($tmp == "open") {
+            if (myIsset($html.get("tag"))) {
+                $composite += "<" + String.valueOf($html.get("tag")) + $spacer + $attributes + ">";
+            }
+            if (myIsset($html.get("tag_content"))) {
+                $composite += String.valueOf($html.get("tag_content"));
+            }
+
+        } else if ($tmp == "close") {
+            if (myIsset($html.get("tag_content"))) {
+                $composite += String.valueOf($html.get("tag_content"));
+            }
+            if (myIsset($html.get("tag"))) {
+                $composite += "</" + String.valueOf($html.get("tag")) + ">";
+            }
+        } else if ($tmp == "attributes") {
+            $composite = $attributes;
+        } else {
+            if (myIsset($html.get("tag"))) {
+                $composite += "<" + String.valueOf($html.get("tag")) + $spacer + $attributes + ">";
+            }
+            if (myIsset($html.get("tag_content"))) {
+                $composite += String.valueOf($html.get("tag_content"));
+            }
+            if (myIsset($html.get("tag"))) {
+                $composite += "</" + String.valueOf($html.get("tag")) + ">";
+            }
+        }
+
+        if (myIsset($html.get("tag_content_after"))) {
+            $composite += String.valueOf($html.get("tag_content_after"));
+        }
+
+        if (asBool($html.get("return")) == true) {
+            return $composite;
+        }
+
+        System.out.println($composite);
+        return null;
+    }
+
+    /*
+     * adapted from https://github.com/stephenharris/Event-Organiser/blob/master/includes/event-organiser-utility
+     * -public statics.php
+     */
+    public static Map _eventorganiser_remove_duplicates(Map $array) {
+        //Do we need to worry about the myTimes of the date-myTime objects?
+        if (myEmpty($array)) {
+            return $array;
+        }
+        Map $unique = new HashMap();
+        Set<Map.Entry> set = $array.entrySet();
+        for (Map.Entry entry : set) {
+            Object $key = entry.getKey();
+            Object $object = entry.getValue();
+            if (!myInArray($object, $unique)) {
+                $unique.put($key, $object);
+            }
+        }
+        return $unique;
+    }
+
+    /*
+     * adapted from https://github.com/stephenharris/Event-Organiser/blob/master/includes/event-organiser-utility
+     * -public statics.php
+     */
+    public static int _eventorganiser_compare_datemyTime(Object $date1, Object $date2) {
+
+        if ($date1 == $date2) {
+            return 0;
+        } else if (((Comparable) $date1).compareTo($date2) > 0) {
+            return 1;
+        } else {
+            return -1;
+        }
+
+    }
+
+    /*
+     * copied from https://developer.wordpress.org/reference/public statics/absint/
+     */
+    public static int absint(Object $maybeint) {
+        return Math.abs(asInt($maybeint));
+    }
+
+//20 ----------------------------
 //
 //    /*
 //     * copied from https://developer.wordpress.org/reference/public statics/add_cssclass/
@@ -1716,9 +1874,10 @@ public class Test
 //        return $x > 10 ? foo17B($x, $x + $y) : $y;
 //    }
 //
-
-//10 ---------------------------- indirect recursive public static groups
-
+//
+////10 ---------------------------- indirect recursive public static groups
+//
+//    ?>
 
     //some additional helper dummy methods;
 

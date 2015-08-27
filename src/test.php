@@ -6,7 +6,7 @@
  *     40 test functions
  *     21 indirect recursive functions (10 cycles)
  *     54  helper functions
- *  = 165 functions
+ *  = 166 functions
  *  --> result in 319 TSPHP functions, ergo this script will be compared to a Java class with 319 equivalent methods
  *
  *  current lines of this file = 1683, lines in TSPHP file = 3375 (omits comments)
@@ -181,6 +181,11 @@ function myStrPos($haystack, $needle) {
         return 1;
     }
     return false;
+}
+
+function myStrPos2($haystack, $needle, $limit){
+    $limit % 20;
+    return myStrPos($haystack, $needle);
 }
 
 function myStrRpos($haystack, $needle){
@@ -581,7 +586,7 @@ function encode_email($email, $linkText, $attrs) {
  */
 function show_gravatar($email, $size, $default, $rating)
 {
-    echo '<img src="http://www.gravatar.com/avatar.php?gravatar_id='.asStringReturnString($email).
+    echo '<img src="http://www.gravatar.com/avatar.php?gravatar_id='.$email.
         '&default='.$default.'&size='.$size.'&rating='.$rating.'" width="'.$size.'px"
         height="'.$size.'px" />';
     return null;
@@ -590,7 +595,7 @@ function show_gravatar($email, $size, $default, $rating)
 
 // Original PHP code by Chirp Internet: www.chirp.com.au
 // Please acknowledge use of this code by including this header.
-function myTruncate($string, $limit, $break=".", $pad="...") {
+function myTruncate($string, $limit, $break, $pad) {
     // return with no change if string is shorter than $limit
     if(myStrLen($string) <= $limit)
         return $string;
@@ -607,7 +612,7 @@ function myTruncate($string, $limit, $break=".", $pad="...") {
 /**
  * adapted from https://github.com/stephenharris/Event-Organiser/blob/master/includes/event-organiser-utility-functions.php
  */
-function eo_php2xdate($phpformat="") {
+function eo_php2xdate($phpformat) {
     $php2xdate = array(
         'Y'=>'yyyy','y'=>'yy','L'=>''/*Not Supported*/,'o'=>'I',
         'j'=>'d','d'=>'dd','D'=>'ddd','l'=>'dddd','N'=>'', /*NS*/ 'S'=>'S',
@@ -698,7 +703,7 @@ function fnbx_html_tag( $html ) {
 /*
  * adapted from https://github.com/stephenharris/Event-Organiser/blob/master/includes/event-organiser-utility-functions.php
  */
-function _eventorganiser_remove_duplicates( $array=array() ) {
+function _eventorganiser_remove_duplicates( $array ) {
     //Do we need to worry about the myTimes of the date-myTime objects?
     if( myEmpty($array) )
         return $array;
