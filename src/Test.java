@@ -1644,13 +1644,13 @@ public class Test
         myShuffle($next);
         for (Object $d : $next.values()) {
             Map element = (Map) $map.get(oldSchoolAddition($y, ((Map) $d).get(1)));
-            if (element.get(oldSchoolAddition($x, ((Map) $d).get(0))) != ' ') {
+            if (element.get(oldSchoolAddition($x, ((Map) $d).get(0))) != " ") {
                 Map element2 = (Map) $map.get(oldSchoolAddition($y, oldSchoolDivision(((Map) $d).get(1), 2)));
                 element2.put(oldSchoolAddition($x, oldSchoolDivision(((Map) $d).get(0), 2)), ' ');
-                generate(node(oldSchoolAddition($x, ((Map) $d).get(0)), oldSchoolAddition($y, ((Map) $d).get(1))),
+                generate(
+                        node(oldSchoolAddition($x, ((Map) $d).get(0)), oldSchoolAddition($y, ((Map) $d).get(1))),
                         $map);
             }
-
         }
         return null;
     }
@@ -1664,123 +1664,158 @@ public class Test
         return null;
     }
 
-//// 50 -----------------------
-//
-//    /***********   start test public statics ***************/
-//
-//    public static megamorphicAdd(
-//            $a1,  $a2,  $a3,  $a4,  $a5,
-//            $a6,  $a7,  $a8,  $a9,  $a10,
-//            $a11, $a12, $a13, $a14, $a15,
-//            $a16, $a17, $a18, $a19, $a20) {
-//
-//        return $a1  + $a2  + $a3  + $a4  + $a5
-//                + $a6  + $a7  + $a8  + $a9  + $a10
-//                + $a11 + $a12 + $a13 + $a14 + $a15
-//                + $a16 + $a17 + $a18 + $a19 + $a20;
-//    }
-//
-//    public static endless(){
-//        return endless();
-//    }
-//
-//    //direct recursive public statics and soft typing
-//    public static test(array $a){
-//        $a = $a > 1 ? test($a - 1) : 0; return $a;
-//    }
-//
-//    //parametric polymorphic direct recursive public static
-//    public static fibGen($n){
-//        return $n > 0 ? fibGen($n-1) + fibGen($n-2) : $n;
-//    }
-//
-//    public static add($x, $y) {
-//        return $x + $y;
-//    }
-//
-//    public static fib($n) {
-//        return $n > 0 ? fib($n - 1) + fib($n - 2) : 1;
-//    }
-//
-//    public static fac($n) {
-//        return $n > 0 ? $n * fac($n) : $n;
-//    }
-//
-//    public static startsWith($text, $value) {
-//        return myStrPos($text, $value) === 0;
-//    }
-//
-//    public static withImplicitReturn($x) {
-//        if ($x) {
-//            return $x + 1;
-//        }
-//    }
-//
-//    public static wrapIt($value, $wrapIt) {
-//        if ($wrapIt) {
-//            return [$value];
-//        }
-//        return $value;
-//    }
-//
-//// 10 (total 60) -------------------------------
-//
-//    /* Fallback to soft typing required */
-//    public static addOne($x) {
-//        if (myIsArray($x)) {
-//            return $x + [1];
-//        }
-//        return $x + 1;
-//    }
-//
-//    public static typeHintAndDataPolymorphism(array $x, $key) {
-//        $x = $x[$key];
-//        return $x + 1;
-//    }
-//
-//    public static identity($x) {
-//        return $x;
-//    }
-//
-//    public static convertibleToString($x) {
-//        echo $x;
-//        return identity($x);
-//    }
-//
-//    public static asStringReturnString($x) {
-//        echo $x;
-//        return (string) $x;
-//    }
-//
-//    public static countValue(array $arr, $value) {
-//        $count = 0;
-//        for ($i = 0; $i < myCount($arr); ++$i) {
-//            if ($arr[$i] == $value) {
-//                ++$count;
-//            }
-//        }
-//        return $count;
-//    }
-//
-//    public static isEven($x) {
-//        return $x % 2 == 0;
-//    }
-//
-//    public static isOdd($x) {
-//        return $x % 2 == 1;
-//    }
-//
-//    public static someLogic($x, $y, $z) {
-//        $a = $x || $y && !$z;
-//        $b = !$x or $y xor $z and $a;
-//        return $a == $b;
-//    }
-//
-//    public static orExit($x) {
-//        $x or exit(-1);
-//        return null;
-//    }
-//
+// 50 -----------------------
+
+    /**
+     * ********   start test public statics **************
+     */
+
+    public static <T extends Number> T megamorphicAdd(
+            Object $a1, Object $a2, Object $a3, Object $a4, Object $a5,
+            Object $a6, Object $a7, Object $a8, Object $a9, Object $a10,
+            Object $a11, Object $a12, Object $a13, Object $a14, Object $a15,
+            Object $a16, Object $a17, Object $a18, Object $a19, Object $a20) {
+
+        return (T) (oldSchoolAddition((T) (oldSchoolAddition((T) (oldSchoolAddition((T) (oldSchoolAddition((T)
+                (oldSchoolAddition((T) (oldSchoolAddition((T) (oldSchoolAddition((T) (oldSchoolAddition((T)
+                        (oldSchoolAddition((T) (oldSchoolAddition((T) (oldSchoolAddition((T) (oldSchoolAddition((T)
+                                        (oldSchoolAddition((T) (oldSchoolAddition((T) (oldSchoolAddition((T)
+                                                        (oldSchoolAddition((T) (oldSchoolAddition((T)
+                                                                        (oldSchoolAddition(
+                                                                                (T) (oldSchoolAddition($a1, $a2)),
+                                                                                $a3)),
+                                                                $a4)), $a5)),
+                                                $a6)), $a7)), $a8)), $a9)), $a10)), $a11)),
+                                $a12)), $a13)), $a14)), $a15)), $a16)), $a17)), $a18)), $a19)), $a20));
+    }
+
+    public static Object endless() {
+        return endless();
+    }
+
+    //direct recursive public statics and soft typing
+    public static Object test(Object $a_0) {
+        Object $a = $a_0;
+        $a = ((Comparable) $a).compareTo(1) > 0 ? test(oldSchoolSubtraction($a, 1)) : 0;
+        return $a;
+    }
+
+    //parametric polymorphic direct recursive public static
+    public static Object fibGen(Object $n) {
+        return ((Comparable) $n).compareTo(0) > 0
+                ? oldSchoolAddition(fibGen(oldSchoolSubtraction($n, 1)), fibGen(oldSchoolSubtraction($n, 2)))
+                : $n;
+    }
+
+    public static Number add(Object $x, Object $y) {
+        return oldSchoolAddition($x, $y);
+    }
+
+    public static Number fib(Object $n) {
+        return ((Comparable) $n).compareTo(0) > 0
+                ? oldSchoolAddition(fib(oldSchoolSubtraction($n, 1)), fib(oldSchoolSubtraction($n, 2)))
+                : 1;
+    }
+
+    public static Object fac(Object $n) {
+        return ((Comparable) $n).compareTo(0) > 0
+                ? oldSchoolMultiplication($n, fac($n))
+                : $n;
+    }
+
+    public static boolean startsWith(Object $text, Object $value) {
+        return asInt(myStrPos($text, $value)) == 0;
+    }
+
+    public static Number withImplicitReturn(Object $x) {
+        if (asBool($x)) {
+            return oldSchoolAddition($x, 1);
+        }
+        return null;
+    }
+
+    public static Object wrapIt(Object $value, Object $wrapIt) {
+        if (asBool($wrapIt)) {
+            Map map = new HashMap();
+            map.put(0, $value);
+            return map;
+        }
+        return $value;
+    }
+
+// 10 (total 60) -------------------------------
+
+    /* Fallback to soft typing required */
+    public static Object addOne(Object $x) {
+        if (myIsArray($x)) {
+            Map map = new HashMap();
+            map.put(0, 1);
+            return myArrayMerge((Map) $x, map);
+        }
+        return oldSchoolAddition($x, 1);
+    }
+
+    public static Number typeHintAndDataPolymorphism(Map $x_0, Object $key) {
+        Object $x = $x_0.get($key);
+        return oldSchoolAddition($x, 1);
+    }
+
+    public static <T> T identity(T $x) {
+        return $x;
+    }
+
+    public static Object convertibleToString(Object $x) {
+        System.out.println(String.valueOf($x));
+        return identity($x);
+    }
+
+    public static String asStringReturnString(Object $x) {
+        System.out.println(String.valueOf($x));
+        return (String) $x;
+    }
+
+    public static int countValue(Map $arr, Object $value) {
+        int $count = 0;
+        for (int $i = 0; $i < myCount($arr); ++$i) {
+            if ($arr.get($i) == $value) {
+                ++$count;
+            }
+        }
+        return $count;
+    }
+
+    public static boolean isEven(Object $x) {
+        return asInt(mod($x, 2)) == 0;
+    }
+
+    public static boolean isOdd(Object $x) {
+        return asInt(mod($x, 2)) == 1;
+    }
+
+    private static boolean or(boolean $x, boolean $y) {
+        return true;
+    }
+
+    private static boolean xor(boolean b, boolean $a) {
+        return true;
+    }
+
+    private static boolean and(boolean b, boolean $a) {
+        return true;
+    }
+
+    public static boolean someLogic(Object $x, Object $y, Object $z) {
+        boolean $a = asBool($x) || asBool($y) && !asBool($z);
+        boolean $b;
+        or($b = !asBool($x), xor(asBool($y), and(asBool($z), $a)));
+        return $a == $b;
+    }
+
+    public static Void orExit(Object $x) {
+        or(asBool($x), asBool(-1));
+        return null;
+    }
+
 ////20 (total 70)-------------------------------
 //
 //    public static andExit($x) {

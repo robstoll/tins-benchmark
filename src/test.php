@@ -1382,7 +1382,8 @@ function endless(){
 
 //direct recursive functions and soft typing
 function test(array $a){
-    $a = $a > 1 ? test($a - 1) : 0; return $a;
+    $a = $a > 1 ? test($a - 1) : 0;
+    return $a;
 }
 
 //parametric polymorphic direct recursive function
