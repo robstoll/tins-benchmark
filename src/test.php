@@ -779,7 +779,7 @@ function zeroise( $number, $threshold ) {
 /**
  * adapted from https://developer.wordpress.org/reference/functions/antispambot/
  */
-function antispambot( $email_address, $hex_encoding = 0 ) {
+function antispambot( $email_address, $hex_encoding ) {
     $email_no_spam_address = '';
     for ( $i = 0, $len = myStrLen( $email_address ); $i < $len; $i++ ) {
         $j = myRand( 0, 1 + $hex_encoding );
@@ -828,7 +828,7 @@ function home_url() {
 /*
  * adapted from https://developer.wordpress.org/reference/functions/wp_validate_redirect/
  */
-function wp_validate_redirect($location, $default = '') {
+function wp_validate_redirect($location, $default) {
     $location = myTrim( $location );
     // browsers will assume 'http' is your protocol, and will obey a redirect to a URL starting with '//'
     if ( mySubstr($location, 0, 2) == '//' )
@@ -886,7 +886,7 @@ function get_option($option) {
 /*
  * https://developer.wordpress.org/reference/functions/balancetags/
  */
-function balanceTags( $text, $force = false ) {
+function balanceTags( $text, $force) {
     if ( $force || get_option('use_balanceTags') == 1 ) {
         return force_balance_tags( $text );
     } else {

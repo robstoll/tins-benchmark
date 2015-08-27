@@ -908,295 +908,345 @@ public class Test
     }
 
 //20 ----------------------------
-//
-//    /*
-//     * copied from https://developer.wordpress.org/reference/public statics/add_cssclass/
-//     */
-//    public static add_cssclass($add, $class) {
-//        $class = myEmpty($class) ? $add : $class .= " " . $add;
-//        return $class;
-//    }
-//
-//    public static is_admin() {return false;}
-//    public static is_rtl() {return true;}
-//    public static add_theme_support($x) { $x."1"; return null;}
-//
-//    /**
-//     * adapted from https://developer.wordpress.org/reference/public statics/add_editor_style/
-//     */
-//    public static add_editor_style( array $stylesheet, array $editor_styles) {
-//        add_theme_support( "editor-style" );
-//
-//        if ( ! is_admin() )
-//            return;
-//
-//        if ( is_rtl() ) {
-//            $rtl_stylesheet = str_replace(".css", "-rtl.css", $stylesheet[0]);
-//            $stylesheet[myCount($stylesheet)] = $rtl_stylesheet;
-//        }
-//
-//        $editor_styles = myArrayMerge( $editor_styles, $stylesheet );
-//        return null;
-//    }
-//
-//    /*
-//     * adapted from https://developer.wordpress.org/reference/public statics/zeroise/
-//     */
-//    public static zeroise( $number, $threshold ) {
-//        return mySprintf( "%0" . $threshold . "s", $number );
-//    }
-//
-//    /**
-//     * adapted from https://developer.wordpress.org/reference/public statics/antispambot/
-//     */
-//    public static antispambot( $email_address, $hex_encoding = 0 ) {
-//        $email_no_spam_address = "";
-//        for ( $i = 0, $len = myStrLen( $email_address ); $i < $len; $i++ ) {
-//            $j = myRand( 0, 1 + $hex_encoding );
-//            if ( $j == 0 ) {
-//                $email_no_spam_address .= "&#" . myOrd( $email_address[$i] ) . ";";
-//            } else if ( $j == 1 ) {
-//                $email_no_spam_address .= $email_address[$i];
-//            } else if ( $j == 2 ) {
-//                $email_no_spam_address .= "%" . zeroise( myDechex( myOrd( $email_address[$i] ) ), 2 );
-//            }
-//        }
-//
-//        return str_replace( "@", "&#64;", $email_no_spam_address );
-//    }
-//
-//
-//
-//    /*
-//     * Copied from https://developer.wordpress.org/reference/public statics/allowed_tags/
-//     */
-//    public static allowed_tags($allowedtags) {
-//        $allowed = "";
-//        foreach ( (array) $allowedtags as $tag => $attributes ) {
-//            $allowed .= "<".$tag;
-//            if ( 0 < myCount($attributes) ) {
-//                foreach ( $attributes as $attribute => $limits ) {
-//                    $allowed .= " ".$attribute."=""";
-//                }
-//            }
-//            $allowed .= "> ";
-//        }
-//        return myHtmlEntities( $allowed );
-//    }
-//
-//
-//
-//    public static apply_filters($tag, $value, $var) {
-//        $tag."a";
-//        return null;
-//    }
-//
-//    public static home_url() {
-//        return "http://...";
-//    }
-//
-//    /*
-//     * adapted from https://developer.wordpress.org/reference/public statics/wp_validate_redirect/
-//     */
-//    public static wp_validate_redirect($location, $default = "") {
-//        $location = myTrim( $location );
-//        // browsers will assume "http" is your protocol, and will obey a redirect to a URL starting with "//"
-//        if ( mySubstr($location, 0, 2) == "//" )
-//            $location = "http:" . $location;
-//
-//        // In php 5 myParseUrl may fail if the URL query part contains http://, bug #38143
-//        $test = ( $cut = myStrPos($location, "?") ) ? mySubstr( $location, 0, $cut ) : $location;
-//
-//        $lp  = myParseUrl($test);
-//
-//        // Give up if malformed URL
-//        if ( false === $lp )
-//            return $default;
-//
-//        // Allow only http and https schemes. No data:, etc.
-//        if ( myIsset($lp["scheme"]) && !("http" == $lp["scheme"] || "https" == $lp["scheme"]) )
-//            return $default;
-//
-//        // Reject if scheme is set but host is not. This catches urls like https:host.com for which myParseUrl does
-// not set the host field.
-//        if ( myIsset($lp["scheme"])  && !myIsset($lp["host"]) )
-//            return $default;
-//
-//        $wpp = myParseUrl(home_url());
-//
-//        /**
-//         * Filter the whitelist of hosts to redirect to.
-//         *
-//         * @since 2.3.0
-//         *
-//         * @param array       $hosts An array of allowed hosts.
-//         * @param bool|string $host  The parsed host; empty if not isset.
-//         */
-//        $allowed_hosts = (array) apply_filters( "allowed_redirect_hosts", array($wpp["host"]),
-// myIsset($lp["host"]) ? $lp["host"] : "" );
-//
-//        if ( myIsset($lp["host"]) && ( !myInArray($lp["host"], $allowed_hosts) && $lp["host"] != myStrToLower
-// ($wpp["host"])) )
-//            $location = $default;
-//
-//        return $location;
-//    }
-//
-//    /**
-//     * adapted from https://developer.wordpress.org/reference/public statics/backslashit/
-//     */
-//    public static backslashit( $string ) {
-//        if ( myIsset( $string[0] ) && $string[0] >= "0" && $string[0] <= "9" )
-//            $string = "\\\\" . $string;
-//        return myAddCSlashes( $string, "A..Za..z" );
-//    }
-//
-//    public static get_option($option) {
-//        return $option;
-//    }
-//
-//
-//    /*
-//     * https://developer.wordpress.org/reference/public statics/balancetags/
-//     */
-//    public static balanceTags( $text, $force = false ) {
-//        if ( $force || get_option("use_balanceTags") == 1 ) {
-//            return force_balance_tags( $text );
-//        } else {
-//            return $text;
-//        }
-//    }
-//
-//    /**
-//     * adapted from https://developer.wordpress.org/reference/public statics/backslashit/
-//     */
-//    public static force_balance_tags( $text ) {
-//        $tagstack = array();
-//        $stacksize = 0;
-//        $tagqueue = "";
-//        $newtext = "";
-//        // Known single-entity/self-closing tags
-//        $single_tags = array( "area", "base", "basefont", "br", "col", "command", "embed", "frame", "hr", "img",
-// "input", "isindex", "link", "meta", "param", "source" );
-//        // Tags that can be immediately nested within themselves
-//        $nestable_tags = array( "blockquote", "div", "object", "q", "span" );
-//
-//        // WP bug fix for comments - in case you REALLY meant to type "< !--"
-//        $text = str_replace("< !--", "<    !--", $text);
-//        // WP bug fix for LOVE <3 (and other situations with "<" before a number)
-//        $text = myPregReplace("#<([0-9]{1})#", "&lt;$1", $text);
-//
-//        $regex=[];
-//        while ( myPregMatch("/<(\/?[\w:]*)\s*([^>]*)>/", $text, $regex) ) {
-//            $newtext .= $tagqueue;
-//
-//            $i = myStrPos($text, $regex[0]);
-//            $l = myStrLen($regex[0]);
-//
-//            // clear the shifter
-//            $tagqueue = "";
-//            // Pop or Push
-//            if ( myIsset($regex[1][0]) && "/" == $regex[1][0] ) { // End Tag
-//                $tag = myStrToLower(mySubstr2($regex[1],1));
-//                // if too many closing tags
-//                if ( $stacksize <= 0 ) {
-//                    $tag = "";
-//                    // or close to be safe $tag = "/" . $tag;
-//                }
-//                // if stacktop value = tag close value then pop
-//                else if ( $tagstack[$stacksize - 1] == $tag ) { // found closing tag
-//                    $tag = "</" . $tag . ">"; // Close Tag
-//                    // Pop
-//                    myArrayPop( $tagstack );
-//                    $stacksize--;
-//                } else { // closing tag not at top, search for it
-//                    for ( $j = $stacksize-1; $j >= 0; $j-- ) {
-//                        if ( $tagstack[$j] == $tag ) {
-//                            // add tag to tagqueue
-//                            for ( $k = $stacksize-1; $k >= $j; $k--) {
-//                                $tagqueue .= "</" . myArrayPop( $tagstack ) . ">";
-//                                $stacksize--;
-//                            }
-//                            break;
-//                        }
-//                    }
-//                    $tag = "";
-//                }
-//            } else { // Begin Tag
-//                $tag = myStrToLower($regex[1]);
-//
-//                // Tag Cleaning
-//
-//                // If it"s an empty tag "< >", do nothing
-//                if ( "" == $tag ) {
-//                    // do nothing
-//                }
-//                // ElseIf it presents itself as a self-closing tag...
-//                else if ( mySubstr2( $regex[2], -1 ) == "/" ) {
-//                    // ...but it isn"t a known single-entity self-closing tag, then don"t let it be treated as such
-// and
-//                    // immediately close it with a closing tag (the tag will encapsulate no text as a result)
-//                    if ( ! myInArray( $tag, $single_tags ) )
-//                        $regex[2] = myTrim( mySubstr( $regex[2], 0, -1 ) ) . "></".$tag;
-//                }
-//                // ElseIf it"s a known single-entity tag but it doesn"t close itself, do so
-//                else if ( myInArray($tag, $single_tags) ) {
-//                    $regex[2] .= "/";
-//                }
-//                // Else it"s not a single-entity tag
-//                else {
-//                    // If the top of the stack is the same as the tag we want to push, close previous tag
-//                    if ( $stacksize > 0 && !myInArray($tag, $nestable_tags) && $tagstack[$stacksize - 1] == $tag ) {
-//                        $tagqueue = "</" . myArrayPop( $tagstack ) . ">";
-//                        $stacksize--;
-//                    }
-//                    $stacksize = myArrayPush( $tagstack, $tag );
-//                }
-//
-//                // Attributes
-//                $attributes = $regex[2];
-//                if ( ! myEmpty( $attributes ) && $attributes[0] != ">" )
-//                    $attributes = " " . $attributes;
-//
-//                $tag = "<" . $tag . $attributes . ">";
-//                //If already queuing a close tag, then put this tag on, too
-//                if ( !myEmpty($tagqueue) ) {
-//                    $tagqueue .= $tag;
-//                    $tag = "";
-//                }
-//            }
-//            $newtext .= mySubstr($text, 0, $i) . $tag;
-//            $text = mySubstr2($text, $i + $l);
-//        }
-//
-//        // Clear Tag Queue
-//        $newtext .= $tagqueue;
-//
-//        // Add Remaining text
-//        $newtext .= $text;
-//
-//        // Empty Stack
-//        while( $x = myArrayPop($tagstack) )
-//            $newtext .= "</" . $x . ">"; // Add remaining tags to close
-//
-//        // WP fix for the bug with HTML comments
-//        $newtext = str_replace("< !--","<!--",$newtext);
-//        $newtext = str_replace("<    !--","< !--",$newtext);
-//
-//        return $newtext;
-//    }
-//
-//    /*
-//     * adapted from https://developer.wordpress.org/reference/public statics/before_last_bar/
-//     */
-//    public static before_last_bar( $string ) {
-//        $last_bar = myStrRpos( $string, "|" );
-//        if ( false === $last_bar )
-//            return $string;
-//        else
-//            return mySubstr( $string, 0, $last_bar );
-//    }
-//
+
+    /*
+     * copied from https://developer.wordpress.org/reference/public statics/add_cssclass/
+     */
+    public static Object add_cssclass(Object $add, Object $class) {
+        $class = myEmpty($class) ? $add : ($class = $class + " " + $add);
+        return $class;
+    }
+
+    public static boolean is_admin() {
+        return false;
+    }
+
+    public static boolean is_rtl() {
+        return true;
+    }
+
+    public static Void add_theme_support(Object $x) {
+        String s = String.valueOf($x) + "1";
+        return null;
+    }
+
+    /**
+     * adapted from https://developer.wordpress.org/reference/public statics/add_editor_style/
+     */
+    public static Void add_editor_style(Map $stylesheet, Map $editor_styles) {
+        add_theme_support("editor-style");
+
+        if (!is_admin()) {
+            return null;
+        }
+
+        if (is_rtl()) {
+            Object $rtl_stylesheet = str_replace(".css", "-rtl.css", $stylesheet.get(0));
+            $stylesheet.put(myCount($stylesheet), $rtl_stylesheet);
+        }
+
+        $editor_styles = myArrayMerge($editor_styles, $stylesheet);
+        return null;
+    }
+
+    /*
+     * adapted from https://developer.wordpress.org/reference/public statics/zeroise/
+     */
+    public static String zeroise(Object $number, Object $threshold) {
+        return mySprintf("%0" + String.valueOf($threshold) + "s", $number);
+    }
+
+    /**
+     * adapted from https://developer.wordpress.org/reference/public statics/antispambot/
+     */
+    public static Object antispambot(Object $email_address, Object $hex_encoding) {
+        String $email_no_spam_address = "";
+        for (int $i = 0, $len = myStrLen($email_address); $i < $len; $i++) {
+            int $j = myRand(0, oldSchoolAddition(1, $hex_encoding));
+            if ($j == 0) {
+                $email_no_spam_address += "&#" + myOrd(((Map) $email_address).get($i)) + ";";
+            } else if ($j == 1) {
+                $email_no_spam_address += String.valueOf($email_address).charAt($i);
+            } else if ($j == 2) {
+                $email_no_spam_address += "%" + zeroise(myDechex(myOrd(String.valueOf($email_address).charAt($i))), 2);
+            }
+        }
+
+        return str_replace("@", "&#64;", $email_no_spam_address);
+    }
+
+
+    /*
+     * Copied from https://developer.wordpress.org/reference/public statics/allowed_tags/
+     */
+    public static String allowed_tags(Object $allowedtags) {
+        String $allowed = "";
+        Set<Map.Entry> set = ((Map) $allowedtags).entrySet();
+        for (Map.Entry entry : set) {
+            Object $tag = entry.getKey();
+            Object $attributes = entry.getValue();
+            $allowed += "<" + String.valueOf($tag);
+            if (0 < myCount((Map) $attributes)) {
+                set = ((Map) $attributes).entrySet();
+                for (Map.Entry entry2 : set) {
+                    Object $attribute = entry2.getKey();
+                    Object $limits = entry2.getValue();
+                    $allowed += " " + String.valueOf($attribute) + "=\"\"";
+                }
+            }
+            $allowed += "> ";
+        }
+        return myHtmlEntities($allowed);
+    }
+
+
+    public static Object apply_filters(Object $tag, Object $value, Object $var) {
+        String s = String.valueOf($tag) + "a";
+        return null;
+    }
+
+    public static String home_url() {
+        return "http://...";
+    }
+
+    /*
+     * adapted from https://developer.wordpress.org/reference/public statics/wp_validate_redirect/
+     */
+    public static Object wp_validate_redirect(Object $location, Object $default) {
+        $location = myTrim($location);
+        // browsers will assume "http" is your protocol, and will obey a redirect to a URL starting with "//"
+        if (mySubstr($location, 0, 2) == "//") {
+            $location = "http:" + String.valueOf($location);
+        }
+
+        // In php 5 myParseUrl may fail if the URL query part contains http://, bug #38143
+        Object $cut;
+        Object $test = asBool(($cut = myStrPos($location, "?"))) ? mySubstr($location, 0, $cut) : $location;
+
+        Object $lp = myParseUrl($test);
+
+        // Give up if malformed URL
+        if (false == $lp) {
+            return $default;
+        }
+
+        // Allow only http and https schemes. No data:, etc.
+        if (myIsset(((Map) $lp).get("scheme")) && !("http" == ((Map) $lp).get("scheme")
+                || "https" == ((Map) $lp).get("scheme"))) {
+            return $default;
+        }
+
+        // Reject if scheme is set but host is not. This catches urls like https:host.com for which myParseUrl does
+        // not set the host field.
+        if (myIsset(((Map) $lp).get("scheme")) && !myIsset(((Map) $lp).get("host"))) {
+            return $default;
+        }
+
+        Object $wpp = myParseUrl(home_url());
+
+        /**
+         * Filter the whitelist of hosts to redirect to.
+         *
+         * @since 2.3.0
+         *
+         * @param array       $hosts An array of allowed hosts.
+         * @param bool|string $host  The parsed host; empty if not isset.
+         */
+        Map $a = new HashMap();
+        $a.put(0, ((Map) $wpp).get("host"));
+        Map $allowed_hosts = (Map) apply_filters("allowed_redirect_hosts", $a,
+                myIsset(((Map) $lp).get("host")) ? ((Map) $lp).get("host") : "");
+
+        if (myIsset(((Map) $lp).get("host")) && (!myInArray(((Map) $lp).get("host"), $allowed_hosts)
+                && ((Map) $lp).get("host") != myStrToLower(((Map) $wpp).get("host")))) {
+            $location = $default;
+        }
+
+        return $location;
+    }
+
+    /**
+     * adapted from https://developer.wordpress.org/reference/public statics/backslashit/
+     */
+    public static String backslashit(Object $string) {
+        if (myIsset(String.valueOf($string).charAt(0)) && String.valueOf($string).charAt(0) >= '0' && String.valueOf
+                ($string).charAt(0) <= '9') {
+            $string = "\\\\" + $string;
+        }
+        return myAddCSlashes($string, "A..Za..z");
+    }
+
+    public static <T> T get_option(T $option) {
+        return $option;
+    }
+
+
+    /*
+     * https://developer.wordpress.org/reference/public statics/balancetags/
+     */
+    public static Object balanceTags(Object $text, Object $force) {
+        if (asBool($force) || asInt(get_option("use_balanceTags")) == 1) {
+            return force_balance_tags($text);
+        } else {
+            return $text;
+        }
+    }
+
+    /**
+     * adapted from https://developer.wordpress.org/reference/public statics/backslashit/
+     */
+    public static Object force_balance_tags(Object $text) {
+        Map $tagstack = new HashMap();
+        int $stacksize = 0;
+        String $tagqueue = "";
+        Object $newtext = "";
+        // Known single-entity/self-closing tags
+        Map $single_tags = new HashMap();
+        $single_tags.put(0, "area");
+        $single_tags.put(1, "base");
+        $single_tags.put(2, "basefont");
+        $single_tags.put(3, "br");
+        $single_tags.put(4, "col");
+        $single_tags.put(5, "command");
+        $single_tags.put(6, "embed");
+        $single_tags.put(7, "frame");
+        $single_tags.put(8, "hr");
+        $single_tags.put(9, "img");
+        $single_tags.put(10, "input");
+        $single_tags.put(11, "isindex");
+        $single_tags.put(12, "link");
+        $single_tags.put(13, "meta");
+        $single_tags.put(14, "param");
+        $single_tags.put(15, "source");
+        // Tags that can be immediately nested within themselves
+        Map $nestable_tags = new HashMap();
+        $nestable_tags.put(0, "blockquote");
+        $nestable_tags.put(1, "div");
+        $nestable_tags.put(2, "object");
+        $nestable_tags.put(3, "q");
+        $nestable_tags.put(4, "span");
+
+        // WP bug fix for comments - in case you REALLY meant to type "< !--"
+        $text = str_replace("< !--", "<    !--", $text);
+        // WP bug fix for LOVE <3 (and other situations with "<" before a number)
+        $text = myPregReplace("#<([0-9]{1})#", "&lt;$1", $text);
+
+        Map $regex = new HashMap();
+        while (asBool(myPregMatch("/<(\\/?[\\w:]*)\\s*([^>]*)>/", $text, $regex))) {
+            $newtext = String.valueOf($newtext) + $tagqueue;
+
+            Object $i = myStrPos($text, $regex.get(0));
+            int $l = myStrLen($regex.get(0));
+
+            // clear the shifter
+            $tagqueue = "";
+            // Pop or Push
+            String $tag;
+            if (myIsset(((Map) $regex.get(1)).get(0)) && "/" == ((Map) $regex.get(1)).get(0)) { // End Tag
+                $tag = myStrToLower(mySubstr2($regex.get(1), 1));
+                // if too many closing tags
+                if ($stacksize <= 0) {
+                    $tag = "";
+                    // or close to be safe $tag = "/" . $tag;
+                }
+                // if stacktop value = tag close value then pop
+                else if ($tagstack.get($stacksize - 1) == $tag) { // found closing tag
+                    $tag = "</" + $tag + ">"; // Close Tag
+                    // Pop
+                    myArrayPop($tagstack);
+                    $stacksize--;
+                } else { // closing tag not at top, search for it
+                    for (int $j = $stacksize - 1; $j >= 0; $j--) {
+                        if ($tagstack.get($j) == $tag) {
+                            // add tag to tagqueue
+                            for (int $k = $stacksize - 1; $k >= $j; $k--) {
+                                $tagqueue += "</" + String.valueOf(myArrayPop($tagstack)) + ">";
+                                $stacksize--;
+                            }
+                            break;
+                        }
+                    }
+                    $tag = "";
+                }
+            } else { // Begin Tag
+                $tag = myStrToLower($regex.get(1));
+
+                // Tag Cleaning
+
+                // If it"s an empty tag "< >", do nothing
+                if ("" == $tag) {
+                    // do nothing
+                }
+                // ElseIf it presents itself as a self-closing tag...
+                else if (mySubstr2($regex.get(2), -1) == "/") {
+                    // ...but it isn"t a known single-entity self-closing tag, then don"t let it be treated as such and
+                    // immediately close it with a closing tag (the tag will encapsulate no text as a result)
+                    if (!myInArray($tag, $single_tags)) {
+                        $regex.put(2, myTrim(mySubstr($regex.get(2), 0, -1)) + "></" + $tag);
+                    }
+                }
+                // ElseIf it"s a known single-entity tag but it doesn"t close itself, do so
+                else if (myInArray($tag, $single_tags)) {
+                    $regex.put(2, "/");
+                }
+                // Else it"s not a single-entity tag
+                else {
+                    // If the top of the stack is the same as the tag we want to push, close previous tag
+                    if ($stacksize > 0 && !myInArray($tag, $nestable_tags) && $tagstack.get($stacksize - 1) == $tag) {
+                        $tagqueue = "</" + String.valueOf(myArrayPop($tagstack)) + ">";
+                        $stacksize--;
+                    }
+                    $stacksize = myArrayPush($tagstack, $tag);
+                }
+
+                // Attributes
+                Object $attributes = $regex.get(2);
+                if (!myEmpty($attributes) && ((Map) $attributes).get(0) != ">") {
+                    $attributes = " " + $attributes;
+                }
+
+                $tag = "<" + $tag + String.valueOf($attributes) + ">";
+                //If already queuing a close tag, then put this tag on, too
+                if (!myEmpty($tagqueue)) {
+                    $tagqueue += $tag;
+                    $tag = "";
+                }
+            }
+            $newtext = String.valueOf($newtext) + String.valueOf(mySubstr($text, 0, $i)) + $tag;
+            $text = mySubstr2($text, oldSchoolAddition($i, $l));
+        }
+
+        // Clear Tag Queue
+        $newtext = String.valueOf($newtext) + $tagqueue;
+
+        // Add Remaining text
+        $newtext = String.valueOf($newtext) + $text;
+
+        // Empty Stack
+        Object $x;
+        while (asBool($x = myArrayPop($tagstack))) {
+            $newtext = String.valueOf($newtext) + "</" + String.valueOf($x) + ">"; // Add remaining tags to close
+        }
+
+        // WP fix for the bug with HTML comments
+        $newtext = str_replace("< !--", "<!--", $newtext);
+        $newtext = str_replace("<    !--", "< !--", $newtext);
+
+        return $newtext;
+    }
+
+    /*
+     * adapted from https://developer.wordpress.org/reference/public statics/before_last_bar/
+     */
+    public static Object before_last_bar(Object $string) {
+        Object $last_bar = myStrRpos($string, "|");
+        if (false == $last_bar) {
+            return $string;
+        } else {
+            return mySubstr($string, 0, $last_bar);
+        }
+    }
+
 ////30------------------------------
 //
 //    public static get_body_class($class){
