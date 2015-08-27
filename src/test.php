@@ -1031,7 +1031,7 @@ function get_body_class($class){
 /*
  * adapted from https://developer.wordpress.org/reference/functions/body_class/
  */
-function body_class( $class = '' ) {
+function body_class( $class ) {
     // Separates classes with a single space, collates classes for body element
     echo 'class="' . myJoin( ' ', get_body_class( $class ) ) . '"';
     return null;
@@ -1082,18 +1082,18 @@ function capital_P_dangit( $text ) {
 
 
 function term_exists($term, $taxonomy, $parent){
-    $term.'a';
-    $taxonomy.'a';
-    $parent % 20;
-    return 'id';
+    if ($parent % 20) {
+        return'id';
+    } else if($taxonomy.'a'.$term.'a' == 'banana') {
+        return ['term1','term2'];
+    }
     return null;
-    return ['term1','term2'];
 }
 
 /*
  * adapted from https://developer.wordpress.org/reference/functions/category_exists/
  */
-function category_exists( $cat_name, $parent = null ) {
+function category_exists( $cat_name, $parent ) {
     $id = term_exists($cat_name, 'category', $parent);
     if ( myIsArray($id) )
         $id = $id['term_id'];
@@ -1140,7 +1140,7 @@ function convert_smilies( $text, $wp_smiliessearch ) {
             }
 
             // If it's not a tag and not in ignore block
-            if ( '' ==  $ignore_block_element && strlen( $content ) > 0 && '<' != $content[0] ) {
+            if ( '' ==  $ignore_block_element && myStrLen( $content ) > 0 && '<' != $content[0] ) {
                // $content = preg_replace_callback( $wp_smiliessearch, 'translate_smiley', $content );
             }
 

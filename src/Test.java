@@ -357,7 +357,7 @@ public class Test
     public static Map quicksort(Map $arr, Object $left, Object $right) {
         Object $i = $left;
         Object $j = $right;
-        Object $separator = $arr.get(floor(oldSchoolDivide(oldSchoolAddition($left, $right), 2)));
+        Object $separator = $arr.get(floor(oldSchoolDivision(oldSchoolAddition($left, $right), 2)));
 
         while (((Comparable) $i).compareTo($j) <= 0) {
             while (((Comparable) $arr.get($i)).compareTo($separator) < 0) {
@@ -399,7 +399,7 @@ public class Test
         $d.put(0, 0);
         $d.put(0, 1);
         for (int $i = 2; $i <= $t; $i++) {
-            $d.put($i, oldSchoolAddition(oldSchoolMultiply(2, $d.get($i - 1)), 1));
+            $d.put($i, oldSchoolAddition(oldSchoolMultiplication(2, $d.get($i - 1)), 1));
         }
 
         $d = myArrayReverse($d);
@@ -425,7 +425,7 @@ public class Test
             return -1;
         }
 
-        Object $mid = oldSchoolDivide(oldSchoolAddition($left, $right), 2);
+        Object $mid = oldSchoolDivision(oldSchoolAddition($left, $right), 2);
 
         if ($list.get($mid) == $x) {
             return $mid;
@@ -445,7 +445,7 @@ public class Test
         Number $right = myCount($list) - 1;
 
         while (((Comparable) $left).compareTo($right) <= 0) {
-            Object $mid = oldSchoolDivide(oldSchoolAddition($left, $right), 2);
+            Object $mid = oldSchoolDivision(oldSchoolAddition($left, $right), 2);
 
             if ($list.get($mid) == $x) {
                 return $mid;
@@ -552,7 +552,7 @@ public class Test
         $vocal.put(4, "u");
         String $password = "";
         mySRand(Double.parseDouble(myMicrotime()) * 1000000);
-        Object $max = oldSchoolDivide($length, 2);
+        Object $max = oldSchoolDivision($length, 2);
 
         for (int $i = 1; ((Comparable) $i).compareTo($max) <= 0; $i++) {
             $password += $conso.get(myRand(0, 19));
@@ -1248,158 +1248,172 @@ public class Test
     }
 
 ////30------------------------------
-//
-//    public static get_body_class($class){
-//        return [1];
-//    }
-//
-//    /*
-//     * adapted from https://developer.wordpress.org/reference/public statics/body_class/
-//     */
-//    public static body_class( $class = "" ) {
-//        // Separates classes with a single space, collates classes for body element
-//        echo "class="" . myJoin( " ", get_body_class( $class ) ) . """;
-//        return null;
-//    }
-//
-//    /*
-//     * adapted from https://developer.wordpress.org/reference/public statics/bool_from_yn/
-//     */
-//    public static bool_from_yn( $yn ) {
-//        return ( myStrToLower( $yn ) == "y" );
-//    }
-//
-//    /*
-//     * adapted from https://developer.wordpress.org/reference/public statics/calendar_week_mod/
-//     */
-//    public static calendar_week_mod($num) {
-//        $base = 7;
-//        return ($num - $base*floor($num/$base));
-//    }
-//
-//    public static current_filter() {
-//        return "filter";
-//    }
-//
-//    public static _x($text, $context){
-//        return $text.$context;
-//    }
-//
-//    /*
-//     * adapted from https://developer.wordpress.org/reference/public statics/capital_p_dangit/
-//     */
-//    public static capital_P_dangit( $text ) {
-//        // Simple replacement for titles
-//        $current_filter = current_filter();
-//        if ( "the_title" === $current_filter || "wp_title" === $current_filter )
-//            return str_replace( "Wordpress", "WordPress", $text );
-//        // Still here? Use the more judicious replacement
-//        $dblq = false;
-//        if ( false === $dblq ) {
-//            $dblq = _x( "&#8220;", "opening curly double quote" );
-//        }
-//        return str_replace(
-//                array( " Wordpress", "&#8216;Wordpress", $dblq . "Wordpress", ">Wordpress", "(Wordpress" ),
-//        array( " WordPress", "&#8216;WordPress", $dblq . "WordPress", ">WordPress", "(WordPress" ),
-//        $text );
-//    }
-//
-//
-//
-//    public static term_exists($term, $taxonomy, $parent){
-//        $term."a";
-//        $taxonomy."a";
-//        $parent % 20;
-//        return "id";
-//        return null;
-//        return ["term1","term2"];
-//    }
-//
-//    /*
-//     * adapted from https://developer.wordpress.org/reference/public statics/category_exists/
-//     */
-//    public static category_exists( $cat_name, $parent = null ) {
-//        $id = term_exists($cat_name, "category", $parent);
-//        if ( myIsArray($id) )
-//            $id = $id["term_id"];
-//        return $id;
-//    }
-//
-//    /*
-//     * copied from https://developer.wordpress.org/reference/public statics/convert_invalid_entities/
-//     */
-//    public static convert_invalid_entities( $content ) {
-//        $wp_htmltranswinuni = array(
-//                "&#128;" => "&#8364;" // the Euro sign
-//        //...
-//        );
-//
-//        if ( myStrPos( $content, "&#1" ) !== false ) {
-//            $content = myStrtr( $content, $wp_htmltranswinuni );
-//        }
-//
-//        return $content;
-//    }
-//
-//    /*
-//     * adapted from https://developer.wordpress.org/reference/public statics/convert_smilies/
-//     */
-//    public static convert_smilies( $text, $wp_smiliessearch ) {
-//        $output = "";
-//        if ( get_option( "use_smilies" ) && ! myEmpty( $wp_smiliessearch ) ) {
-//            // HTML loop taken from texturize public static, could possible be consolidated
-//            $textarr = myPregSplit( "/(<.*>)/U", $text, -1, 1 ); // capture the tags as well as in between
-//            $stop = myCount( $textarr );// loop stuff
-//
-//            // Ignore proessing of specific tags
-//            $tags_to_ignore = "code|pre|style|script|textarea";
-//            $ignore_block_element = "";
-//
-//            for ( $i = 0; $i < $stop; $i++ ) {
-//                $content = $textarr[$i];
-//
-//                $matches = [];
-//                // If we"re in an ignore block, wait until we find its closing tag
-//                if ( "" == $ignore_block_element && myPregMatch( "/^<(" . $tags_to_ignore . ")>/", $content,
-// $matches ) )  {
-//                    $ignore_block_element = $matches[1];
-//                }
-//
-//                // If it"s not a tag and not in ignore block
-//                if ( "" ==  $ignore_block_element && strlen( $content ) > 0 && "<" != $content[0] ) {
-//                    // $content = preg_replace_callback( $wp_smiliessearch, "translate_smiley", $content );
-//                }
-//
-//                // did we exit ignore block
-//                if ( "" != $ignore_block_element && "</" . $ignore_block_element . ">" == $content )  {
-//                    $ignore_block_element = "";
-//                }
-//
-//                $output .= $content;
-//            }
-//        } else {
-//            // return default text.
-//            $output = $text;
-//        }
-//        return $output;
-//    }
-//
-//    /*
-//     * adapted from https://developer.wordpress.org/reference/public statics/current_time/
-//     */
-//    public static current_myTime( $type, $gmt = 0 ) {
-//        switch ( $type ) {
-//            case "mysql":
-//                return ( $gmt ) ? myGmDate( "Y-m-d H:i:s" , myTime()) : myGmDate( "Y-m-d H:i:s",
-// ( myTime() + ( get_option( "gmt_offset" ) * 60 * 60 ) ) );
-//            case "myTimestamp":
-//                return ( $gmt ) ? myTime() : myTime() + ( get_option( "gmt_offset" ) * 60 * 60 );
-//            default:
-//                return ( $gmt ) ? myDate( $type , myTime()) : myDate( $type, myTime() + ( get_option( "gmt_offset"
-// ) * 60 * 60 ) );
-//        }
-//    }
-//
+
+    public static Map get_body_class(Object $class) {
+        return new HashMap();
+    }
+
+    /*
+     * adapted from https://developer.wordpress.org/reference/public statics/body_class/
+     */
+    public static Void body_class(Object $class) {
+        // Separates classes with a single space, collates classes for body element
+        System.out.println("class=\"" + myJoin(" ", get_body_class($class)) + "\"");
+        return null;
+    }
+
+    /*
+     * adapted from https://developer.wordpress.org/reference/public statics/bool_from_yn/
+     */
+    public static boolean bool_from_yn(Object $yn) {
+        return (myStrToLower(String.valueOf($yn)).equals("y"));
+    }
+
+    /*
+     * adapted from https://developer.wordpress.org/reference/public statics/calendar_week_mod/
+     */
+    public static Number calendar_week_mod(Object $num) {
+        int $base = 7;
+        return oldSchoolSubtraction($num, oldSchoolMultiplication($base, floor(oldSchoolDivision($num, $base))));
+    }
+
+    public static String current_filter() {
+        return "filter";
+    }
+
+    public static String _x(Object $text, Object $context) {
+        return String.valueOf($text) + String.valueOf($context);
+    }
+
+    /*
+     * adapted from https://developer.wordpress.org/reference/public statics/capital_p_dangit/
+     */
+    public static Object capital_P_dangit(Object $text) {
+        // Simple replacement for titles
+        String $current_filter = current_filter();
+        if ("the_title".equals($current_filter) || "wp_title".equals($current_filter)) {
+            return str_replace("Wordpress", "WordPress", $text);
+        }
+        // Still here? Use the more judicious replacement
+        Object $dblq = false;
+        if (false == $dblq) {
+            $dblq = _x("&#8220;", "opening curly double quote");
+        }
+        Map a1 = new HashMap();
+        a1.put(0, " Wordpress");
+        a1.put(1, "&#8216;Wordpress");
+        a1.put(2, String.valueOf($dblq) + "Wordpress");
+        a1.put(3, ">Wordpress");
+        a1.put(4, "(Wordpress");
+
+        Map a2 = new HashMap();
+        a2.put(0, " WordPress");
+        a2.put(1, "&#8216;WordPress");
+        a2.put(2, String.valueOf($dblq) + "WordPress");
+        a2.put(3, ">WordPress");
+        a2.put(4, "(WordPress");
+
+        return str_replace(a1, a2, $text);
+    }
+
+    public static Object term_exists(Object $term, Object $taxonomy, Object $parent) {
+        String s = String.valueOf($term) + "a";
+        if (asBool(mod($parent, 20))) {
+            return "id";
+        } else if ((String.valueOf($taxonomy) + "a" + String.valueOf($term) + "$a").equals("banana")) {
+            Map a = new HashMap();
+            a.put(0, "term1");
+            a.put(1, "term2");
+            return a;
+        }
+        return null;
+    }
+
+    /*
+     * adapted from https://developer.wordpress.org/reference/public statics/category_exists/
+     */
+    public static Object category_exists(Object $cat_name, Object $parent) {
+        Object $id = term_exists($cat_name, "category", $parent);
+        if (myIsArray($id)) {
+            $id = ((Map) $id).get("term_id");
+        }
+        return $id;
+    }
+
+    /*
+     * copied from https://developer.wordpress.org/reference/public statics/convert_invalid_entities/
+     */
+    public static Object convert_invalid_entities(Object $content) {
+        Map $wp_htmltranswinuni = new HashMap();
+        $wp_htmltranswinuni.put("&#128;", "&#8364;"); // the Euro sign
+        //...
+
+        if (((Comparable) myStrPos($content, "&#1")).compareTo(false) == 0) {
+            $content = myStrtr($content, $wp_htmltranswinuni);
+        }
+
+        return $content;
+    }
+
+    /*
+     * adapted from https://developer.wordpress.org/reference/public statics/convert_smilies/
+     */
+    public static Object convert_smilies(Object $text, Object $wp_smiliessearch) {
+        Object $output = "";
+        if (asBool(get_option("use_smilies")) && !myEmpty($wp_smiliessearch)) {
+            // HTML loop taken from texturize public static, could possible be consolidated
+            Map $textarr = myPregSplit("/(<.*>)/U", $text, -1, 1); // capture the tags as well as in between
+            int $stop = myCount($textarr);// loop stuff
+
+            // Ignore proessing of specific tags
+            String $tags_to_ignore = "code|pre|style|script|textarea";
+            String $ignore_block_element = "";
+
+            for (int $i = 0; $i < $stop; $i++) {
+                Object $content = $textarr.get($i);
+
+                Map $matches = new HashMap();
+                // If we"re in an ignore block, wait until we find its closing tag
+                if ("".equals($ignore_block_element) && asBool(myPregMatch(
+                        "/^<(" + $tags_to_ignore + ")>/", $content, $matches))) {
+                    $ignore_block_element = (String) $matches.get(1);
+                }
+
+                // If it"s not a tag and not in ignore block
+                if ("".equals($ignore_block_element) && myStrLen($content) > 0 && "<" != ((Map) $content).get(0)) {
+                    // $content = preg_replace_callback( $wp_smiliessearch, "translate_smiley", $content );
+                }
+
+                // did we exit ignore block
+                if (!"".equals($ignore_block_element) && "</" + $ignore_block_element + ">" == $content) {
+                    $ignore_block_element = "";
+                }
+
+                $output = String.valueOf($output) + $content;
+            }
+        } else {
+            // return default text.
+            $output = $text;
+        }
+        return $output;
+    }
+
+    /*
+     * adapted from https://developer.wordpress.org/reference/public statics/current_time/
+     */
+    public static Object current_myTime(Object $type, Object $gmt) {
+        if ($type == "mysql") {
+            return asBool($gmt) ? myGmDate("Y-m-d H:i:s", myTime()) : myGmDate("Y-m-d H:i:s",
+                    oldSchoolAddition(myTime(), (oldSchoolMultiplication(get_option("gmt_offset"), 60 * 60))));
+        } else if ($type == "myTimestamp") {
+            return asBool($gmt) ? myTime() :
+                    oldSchoolAddition(myTime(), oldSchoolMultiplication(get_option("gmt_offset"), 60 * 60));
+        } else {
+            return asBool($gmt) ? myDate($type, myTime()) : myDate($type,
+                    oldSchoolAddition(myTime(), oldSchoolMultiplication(get_option("gmt_offset"), 60 * 60)));
+        }
+    }
+
 ////38 ------------
 //
 //    /***************** A* implementation, **********
@@ -2001,7 +2015,7 @@ public class Test
         }
     }
 
-    private static Object oldSchoolMultiply(Object $left, Object $right) {
+    private static Object oldSchoolMultiplication(Object $left, Object $right) {
         //only a dummy implementation
         if ($left instanceof Integer && $right instanceof Integer) {
             return (Integer) $left * (Integer) $right;
@@ -2022,7 +2036,7 @@ public class Test
         return $left / $right;
     }
 
-    private static Object oldSchoolDivide(Object $left, Object $right) {
+    private static Object oldSchoolDivision(Object $left, Object $right) {
         //only a dummy implementation
         if ($left instanceof Integer && $right instanceof Integer) {
             return oldSchoolIntDivide((Integer) $left, (Integer) $right);
