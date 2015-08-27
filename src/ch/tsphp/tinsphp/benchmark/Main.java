@@ -23,8 +23,8 @@ public class Main
                 "\"D:\\tins-benchmark\\src\\Test.java\"");
         builder2.redirectErrorStream(true);
         boolean ok = true;
-        for (int i = 0; i < 1; ++i) {
-            long start = System.nanoTime();
+        for (int i = 0; i < 4; ++i) {
+            long start = System.currentTimeMillis();
             Process process;
             if (i % 2 == 0) {
                 process = builder1.start();
@@ -32,7 +32,7 @@ public class Main
                 process = builder2.start();
             }
             int errCode = process.waitFor();
-            long stop = System.nanoTime();
+            long stop = System.currentTimeMillis();
             if (writeOutput(writer1, writer2, i, start, stop, process, errCode)) {
                 ok = false;
                 break;
@@ -45,7 +45,10 @@ public class Main
             }
             file.delete();
         }
+        writer1.flush();
         writer1.close();
+        writer2.flush();
+        writer2.close();
         if (ok) {
             System.out.println("tests done");
         } else {
@@ -60,13 +63,19 @@ public class Main
             if (i % 2 == 0) {
                 if (i >= 20) {
                     writer1.println(stop - start);
+                    if (i % 10 == 0) {
+                        writer1.flush();
+                    }
                 }
                 System.out.println("tinsphp " + i + ": " + (stop - start));
             } else {
                 if (i >= 20) {
                     writer2.println(stop - start);
+                    if (i % 11 == 0) {
+                        writer2.flush();
+                    }
                 }
-                System.out.println("java " + i + ": " + (stop - start));
+                System.out.println("java    " + i + ": " + (stop - start));
             }
         } else {
             System.err.println("Error occurred");
