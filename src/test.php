@@ -1220,7 +1220,7 @@ function heap_pop($heap, $values) {
             if ($j >= $n)
                 break;
             if ($j+1 < $n && $values[$heap[$j+1]] < $values[$heap[$j]])
-                ++$j;
+                $j += 1;
             if ($values[$index] < $values[$heap[$j]])
                 break;
             $heap[$i] = $heap[$j];
@@ -1348,7 +1348,7 @@ function generate($i, $map) {
     foreach ($next as $d)
         if ($map[$y+$d[1]  ][$x+$d[0]  ] != ' ') {
             $map[$y+$d[1]/2][$x+$d[0]/2]  = ' ';
-            generate(node($x+$d[0], $y+$d[1]));
+            generate(node($x+$d[0], $y+$d[1]), $map);
         }
     return null;
 }

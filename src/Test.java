@@ -1414,196 +1414,256 @@ public class Test
         }
     }
 
-////38 ------------
-//
-//    /***************** A* implementation, **********
-//     * found here http://granularreverb.com/a_star.php
-//     * And slightly adapted (by-ref is not yet supported) - some variables were forward reference usages and other
-// bugs
-//     */
-//
-//// A* algorithm by aaz, found at
-//// http://althenia.net/svn/stackoverflow/a-star.php?rev=7
-//// Binary min-heap with element values stored separately
-//
-////original code: public static heap_float(&$heap, &$values, $i, $index) {
-//    public static heap_float($heap, $values, $i, $index) {
-//        $j = 0;
-//        for (; $i; $i = $j) {
-//            $j = ($i + $i%2)/2 - 1;
-//            if ($values[$heap[$j]] < $values[$index])
-//                break;
-//            $heap[$i] = $heap[$j];
-//        }
-//        $heap[$i] = $index;
-//        return null;
-//    }
-//
-//    //original code: public static heap_push(&$heap, &$values, $index) {
-//    public static heap_push($heap, $values, $index) {
-//        heap_float($heap, $values, myCount($heap), $index);
-//        return null;
-//    }
-//
-//    //original code: public static heap_raise(&$heap, &$values, $index) {
-//    public static heap_raise($heap, $values, $index) {
-//        heap_float($heap, $values, myArraySearch($index, $heap), $index);
-//        return null;
-//    }
-//
-//    //original code: public static heap_pop(&$heap, &$values) {
-//    public static heap_pop($heap, $values) {
-//        $front = $heap[0];
-//        $index = myArrayPop($heap);
-//        $n = myCount($heap);
-//        if ($n) {
-//            $j = 0;
-//            for ($i = 0;; $i = $j) {
-//                $j = $i*2 + 1;
-//                if ($j >= $n)
-//                    break;
-//                if ($j+1 < $n && $values[$heap[$j+1]] < $values[$heap[$j]])
-//                    ++$j;
-//                if ($values[$index] < $values[$heap[$j]])
-//                    break;
-//                $heap[$i] = $heap[$j];
-//            }
-//            $heap[$i] = $index;
-//        }
-//        return $front;
-//    }
-//
-//
-//// A-star algorithm:
-////   $start, $target - node indexes
-////   $neighbors($i)     - map of neighbor index => step cost
-////   $heuristic($i, $j) - minimum cost between $i and $j
-//
-//    public static a_star($start, $target, $map) {
-//        $open_heap = array($start); // binary min-heap of indexes with values in $f
-//        $open      = array($start => TRUE); // set of indexes
-//        $closed    = array();               // set of indexes
-//
-//        $g = [];
-//        $h = [];
-//        $f = [];
-//        $from = [];
-//
-//        $g[$start] = 0;
-//        $h[$start] = heuristic($start, $target);
-//        $f[$start] = $g[$start] + $h[$start];
-//
-//        while ($open) {
-//            $i = heap_pop($open_heap, $f);
-//            //not yet supported
-//            //unset($open[$i]);
-//            $open[$i] = null;
-//            $closed[$i] = TRUE;
-//
-//            if ($i == $target) {
-//                $path = array();
-//                for (; $i != $start; $i = $from[$i])
-//                    $path[myCount($path)] = $i;
-//                return myArrayReverse($path);
-//            }
-//
-//            foreach (neighbors($i, $map) as $j => $step)
-//            if (!myArrayKeyExists($j, $closed))
-//                if (!myArrayKeyExists($j, $open) || $g[$i] + $step < $g[$j]) {
-//                    $g[$j] = $g[$i] + $step;
-//                    $h[$j] = heuristic($j, $target);
-//                    $f[$j] = $g[$j] + $h[$j];
-//                    $from[$j] = $i;
-//
-//                    if (!myArrayKeyExists($j, $open)) {
-//                        $open[$j] = TRUE;
-//                        heap_push($open_heap, $f, $j);
-//                    } else
-//                        heap_raise($open_heap, $f, $j);
-//                }
-//        }
-//
-//        return FALSE;
-//    }
-//
-//
-//    const NODE_WIDTH = 51;
-//    const NODE_HEIGHT = 23;
-//
-//    public static a_star_test(){
-//        $map = myArrayFill(0, NODE_HEIGHT, myStrRepeat("A", NODE_WIDTH));
-//        generate(node(myRand(1, (NODE_WIDTH +NODE_WIDTH %2)/2-1)*2-1,
-//                myRand(1, (NODE_HEIGHT+NODE_HEIGHT%2)/2-1)*2-1), $map);
-//
-//        $start  = node(1, 1);
-//        $target = node(NODE_WIDTH+NODE_WIDTH%2-3, NODE_HEIGHT+NODE_HEIGHT%2-3);
-//
-//        $path = a_star($start, $target, $map);
-//
-//        myArrayUnshift($path, $start);
-//        foreach ($path as $i) {
-//            $arr = coord($i);
-//            $map[$arr[0]][$arr[1]] = "*";
-//        }
-//        return null;
-//    }
-//
-//
-//    public static node($x, $y) {
-//        return $y * NODE_WIDTH + $x;
-//    }
-//
-//    public static coord($i) {
-//        $x = $i % NODE_WIDTH;
-//        $y = ($i - $x) / NODE_WIDTH;
-//        return array($x, $y);
-//    }
-//
-//    public static neighbors($i, $map) {
-//        $arr = coord($i);
-//        $x = $arr[0];
-//        $y = $arr[1];
-//        $neighbors = array();
-//        if ($x-1 >= 0      && $map[$y][$x-1] == " ") $neighbors[node($x-1, $y)] = 1;
-//        if ($x+1 < NODE_WIDTH  && $map[$y][$x+1] == " ") $neighbors[node($x+1, $y)] = 1;
-//        if ($y-1 >= 0      && $map[$y-1][$x] == " ") $neighbors[node($x, $y-1)] = 1;
-//        if ($y+1 < NODE_HEIGHT && $map[$y+1][$x] == " ") $neighbors[node($x, $y+1)] = 1;
-//        return $neighbors;
-//    }
-//
-//    public static heuristic($i, $j) {
-//        $arr_i = coord($i);
-//        $arr_j = coord($j);
-//        return abs($arr_i[0] - $arr_j[0]) + abs($arr_i[1] - $arr_j[1]);
-//    }
-//
-//    public static generate($i, $map) {
-//        $arr = coord($i);
-//        $x = $arr[0];
-//        $y = $arr[1];
-//        $map[$x][$y] = " ";
-//        $next = array();
-//        if ($x-2 > 0)         $next[myCount($next)] = array(-2, 0);
-//        if ($x+2 < NODE_WIDTH-1)  $next[myCount($next)] = array(+2, 0);
-//        if ($y-2 > 0)         $next[myCount($next)] = array(0, -2);
-//        if ($y+2 < NODE_HEIGHT-1) $next[myCount($next)] = array(0, +2);
-//        myShuffle($next);
-//        foreach ($next as $d)
-//        if ($map[$y+$d[1]  ][$x+$d[0]  ] != " ") {
-//            $map[$y+$d[1]/2][$x+$d[0]/2]  = " ";
-//            generate(node($x+$d[0], $y+$d[1]));
-//        }
-//        return null;
-//    }
-//
-//    public static display_maze($map) {
-//        foreach ($map as $line) {
-//            echo str_replace("A","<span></span>",str_replace("*","<img src="google_smile.gif" width="12"
-// height="12">",$line))."\n";
-//        }
-//        return null;
-//    }
-//
+//38 ------------
+
+    /**
+     * ************** A* implementation, **********
+     * found here http://granularreverb.com/a_star.php
+     * And slightly adapted (by-ref is not yet supported) - some variables were forward reference usages and other
+     * bugs
+     */
+
+// A* algorithm by aaz, found at
+// http://althenia.net/svn/stackoverflow/a-star.php?rev=7
+// Binary min-heap with element values stored separately
+
+//original code: public static heap_float(&$heap, &$values, $i, $index) {
+    public static Void heap_float(Map $heap, Map $values, Object $i, Object $index) {
+        Number $j = 0;
+        for (; asBool($i); $i = $j) {
+            $j = oldSchoolSubtraction(oldSchoolDivision(oldSchoolAddition($i, asInt($i) % 2), 2), 1);
+            if (((Comparable) $values.get($heap.get($j))).compareTo($values.get($index)) < 0) {
+                break;
+            }
+            $heap.put($i, $heap.get($j));
+        }
+        $heap.put($i, $index);
+        return null;
+    }
+
+    //original code: public static heap_push(&$heap, &$values, $index) {
+    public static Void heap_push(Map $heap, Map $values, Object $index) {
+        heap_float($heap, $values, myCount($heap), $index);
+        return null;
+    }
+
+    //original code: public static heap_raise(&$heap, &$values, $index) {
+    public static Void heap_raise(Map $heap, Map $values, Object $index) {
+        heap_float($heap, $values, myArraySearch($index, $heap), $index);
+        return null;
+    }
+
+    //original code: public static heap_pop(&$heap, &$values) {
+    public static Object heap_pop(Map $heap, Map $values) {
+        Object $front = $heap.get(0);
+        Object $index = myArrayPop($heap);
+        int $n = myCount($heap);
+        int $i;
+        if (asBool($n)) {
+            int $j = 0;
+            for ($i = 0; ; $i = $j) {
+                $j = $i * 2 + 1;
+                if (((Comparable) $j).compareTo($n) >= 0) {
+                    break;
+                }
+                if ($j + 1 < $n
+                        && ((Comparable) $values.get($heap.get($j + 1))).compareTo($values.get($heap.get($j))) < 0) {
+                    ++$j;
+                }
+                if (((Comparable) $values.get($index)).compareTo($values.get($heap.get($j))) < 0) {
+                    break;
+                }
+                $heap.put($i, $heap.get($j));
+            }
+            $heap.put($i, $index);
+        }
+        return $front;
+    }
+
+
+// A-star algorithm:
+//   $start, $target - node indexes
+//   $neighbors($i)     - map of neighbor index => step cost
+//   $heuristic($i, $j) - minimum cost between $i and $j
+
+    public static Object a_star(Object $start, Object $target, Map $map) {
+        Map $open_heap = new HashMap();
+        $open_heap.put(0, $start);       // binary min-heap of indexes with values in $f
+        Map $open = new HashMap();
+        $open.put($start, true);        // set of indexes
+        Map $closed = new HashMap();    // set of indexes
+
+        Map $g = new HashMap();
+        Map $h = new HashMap();
+        Map $f = new HashMap();
+        Map $from = new HashMap();
+
+        $g.put($start, 0);
+        $h.put($start, heuristic($start, $target));
+        $f.put($start, oldSchoolAddition($g.get($start), $h.get($start)));
+
+        while (asBool($open)) {
+            Object $i = heap_pop($open_heap, $f);
+            //not yet supported
+            //unset($open[$i]);
+            $open.put($i, null);
+            $closed.put($i, true);
+
+            if ($i == $target) {
+                Map $path = new HashMap();
+                for (; $i != $start; $i = $from.get($i)) {
+                    $path.put(myCount($path), $i);
+                }
+                return myArrayReverse($path);
+            }
+
+            Set<Map.Entry> set = neighbors($i, $map).entrySet();
+            for (Map.Entry entry : set) {
+                Object $j = entry.getKey();
+                Object $step = entry.getValue();
+
+                if (!myArrayKeyExists($j, $closed)) {
+                    if (!myArrayKeyExists($j, $open)
+                            || ((Comparable) oldSchoolAddition($g.get($i), $step)).compareTo($g.get($j)) < 0) {
+                        $g.put($j, oldSchoolAddition($g.get($i), $step));
+                        $h.put($j, heuristic($j, $target));
+                        $f.put($j, oldSchoolAddition($g.get($j), $h.get($j)));
+                        $from.put($j, $i);
+
+                        if (!myArrayKeyExists($j, $open)) {
+                            $open.put($j, true);
+                            heap_push($open_heap, $f, $j);
+                        } else {
+                            heap_raise($open_heap, $f, $j);
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static int NODE_WIDTH = 51;
+    public static int NODE_HEIGHT = 23;
+
+    public static Void a_star_test() {
+        Map $map = myArrayFill(0, NODE_HEIGHT, myStrRepeat("A", NODE_WIDTH));
+        generate(node(myRand(1, (NODE_WIDTH + NODE_WIDTH % 2) / 2 - 1) * 2 - 1,
+                myRand(1, (NODE_HEIGHT + NODE_HEIGHT % 2) / 2 - 1) * 2 - 1), $map);
+
+        Number $start = node(1, 1);
+        Number $target = node(NODE_WIDTH + NODE_WIDTH % 2 - 3, NODE_HEIGHT + NODE_HEIGHT % 2 - 3);
+
+        Object $path = a_star($start, $target, $map);
+
+        myArrayUnshift((Map) $path, $start);
+        for (Object $i : ((Map) $path).values()) {
+            Map $arr = coord($i);
+            ((Map) $map.get($arr.get(0))).put($arr.get(1), "*");
+        }
+        return null;
+    }
+
+
+    public static Number node(Object $x, Object $y) {
+        return oldSchoolMultiplication($y, oldSchoolAddition(NODE_WIDTH, $x));
+    }
+
+    public static Map coord(Object $i) {
+        Object $x = mod($i, NODE_WIDTH);
+        Object $y = oldSchoolDivision(oldSchoolSubtraction($i, $x), NODE_WIDTH);
+        Map a = new HashMap();
+        a.put(0, $x);
+        a.put(0, $y);
+        return a;
+    }
+
+    public static Map neighbors(Object $i, Map $map) {
+        Map $arr = coord($i);
+        Object $x = $arr.get(0);
+        Object $y = $arr.get(1);
+        Map $neighbors = new HashMap();
+        if (((Comparable) oldSchoolSubtraction($x, 1)).compareTo(0) >= 0
+                && ((Map) $map.get($y)).get(oldSchoolSubtraction($x, 1)) == " ") {
+            $neighbors.put(node(oldSchoolSubtraction($x, 1), $y), 1);
+        }
+        if (((Comparable) oldSchoolAddition($x, 1)).compareTo(NODE_WIDTH) < 0 &&
+                ((Map) $map.get($y)).get(oldSchoolAddition($x, 1)) == " ") {
+            $neighbors.put(node(oldSchoolAddition($x, 1), $y), 1);
+        }
+        if (((Comparable) oldSchoolSubtraction($y, 1)).compareTo(0) >= 0
+                && ((Map) $map.get(oldSchoolSubtraction($y, 1))).get($x) == " ") {
+            $neighbors.put(node($x, oldSchoolSubtraction($y, 1)), 1);
+        }
+        if (((Comparable) oldSchoolAddition($y, 1)).compareTo(NODE_HEIGHT) < 0
+                && ((Map) $map.get(oldSchoolAddition($y, 1))).get($x) == " ") {
+            $neighbors.put(node($x, oldSchoolAddition($y, 1)), 1);
+        }
+        return $neighbors;
+    }
+
+    public static Number heuristic(Object $i, Object $j) {
+        Map $arr_i = coord($i);
+        Map $arr_j = coord($j);
+        Number numberX = oldSchoolSubtraction($arr_i.get(0), $arr_j.get(0));
+        Number numberY = oldSchoolSubtraction($arr_i.get(1), $arr_j.get(1));
+        return Math.abs(numberX instanceof Integer ? (Integer) numberX : (Double) numberX) + Math.abs(numberY
+                instanceof Integer ? (Integer) numberY : (Double) numberY);
+    }
+
+    public static Object generate(Object $i, Map $map) {
+        Map $arr = coord($i);
+        Object $x = $arr.get(0);
+        Object $y = $arr.get(1);
+        ((Map) $map.get($x)).put($y, " ");
+        Map $next = new HashMap();
+        if (((Comparable) oldSchoolSubtraction($x, 2)).compareTo(0) > 0) {
+            Map pair = new HashMap();
+            pair.put(0, -2);
+            pair.put(1, 0);
+            $next.put(myCount($next), pair);
+        }
+        if (((Comparable) oldSchoolAddition($x, 2)).compareTo(NODE_WIDTH - 1) < 0) {
+            Map pair = new HashMap();
+            pair.put(0, 2);
+            pair.put(1, 0);
+            $next.put(myCount($next), pair);
+        }
+        if (((Comparable) oldSchoolSubtraction($y, 2)).compareTo(0) > 0) {
+            Map pair = new HashMap();
+            pair.put(0, 0);
+            pair.put(1, -2);
+            $next.put(myCount($next), pair);
+        }
+        if (((Comparable) oldSchoolAddition($y, 2)).compareTo(NODE_HEIGHT - 1) < 0) {
+            Map pair = new HashMap();
+            pair.put(0, 0);
+            pair.put(1, 2);
+            $next.put(myCount($next), pair);
+        }
+        myShuffle($next);
+        for (Object $d : $next.values()) {
+            Map element = (Map) $map.get(oldSchoolAddition($y, ((Map) $d).get(1)));
+            if (element.get(oldSchoolAddition($x, ((Map) $d).get(0))) != ' ') {
+                Map element2 = (Map) $map.get(oldSchoolAddition($y, oldSchoolDivision(((Map) $d).get(1), 2)));
+                element2.put(oldSchoolAddition($x, oldSchoolDivision(((Map) $d).get(0), 2)), ' ');
+                generate(node(oldSchoolAddition($x, ((Map) $d).get(0)), oldSchoolAddition($y, ((Map) $d).get(1))),
+                        $map);
+            }
+
+        }
+        return null;
+    }
+
+    public static Void display_maze(Map $map) {
+        for (Object $line : $map.values()) {
+            System.out.println(str_replace("A", "<span></span>",
+                    str_replace("*", "<img src=\"google_smile.gif\" width=\"12\" height=\"12\"> ",
+                            String.valueOf($line)) + "\n"));
+        }
+        return null;
+    }
+
 //// 50 -----------------------
 //
 //    /***********   start test public statics ***************/
@@ -2015,7 +2075,7 @@ public class Test
         }
     }
 
-    private static Object oldSchoolMultiplication(Object $left, Object $right) {
+    private static Number oldSchoolMultiplication(Object $left, Object $right) {
         //only a dummy implementation
         if ($left instanceof Integer && $right instanceof Integer) {
             return (Integer) $left * (Integer) $right;
