@@ -21,9 +21,14 @@ public class Main
         ProcessBuilder builder2 = new ProcessBuilder("javac",
                 "-d", "\"D:\\tins-benchmark\\tmp\"",
                 "\"D:\\tins-benchmark\\src\\Test.java\"");
+//        ProcessBuilder builder2 = new ProcessBuilder("java",
+//                "-cp", "\"D:\\tins-benchmark\\lib\\*\"",
+//                "ch.tsphp.tinsphp.Main",
+//                "\"D:\\tins-benchmark\\src\\test2.php\"",
+//                "\"D:\\tins-benchmark\\tmp\\test.tsphp\"");
         builder2.redirectErrorStream(true);
         boolean ok = true;
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 10; ++i) {
             long start = System.currentTimeMillis();
             Process process;
             if (i % 2 == 0) {

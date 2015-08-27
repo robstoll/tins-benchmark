@@ -33,7 +33,10 @@ function myArrayMerge(array $a, array $b) {
 }
 
 function myArrayPop(array $array) {
-    return $array;
+    $count = myCount($array);
+    if($count > 0){
+        return $array[$count-1];
+    }
     return null;
 }
 
@@ -67,12 +70,12 @@ function myCount(array $x) {
 }
 
 function myDate($format, $timestamp){
-    $timestamp % 1;
+    $timestamp % 20;
     return $format.'a';
 }
 
 function myDechex($number) {
-    $number % 1;
+    $number % 20;
     return 'f';
 }
 
@@ -104,13 +107,15 @@ function myJoin($glue, array $pieces){
     return $glue.'a';
 }
 
-function myLog($arg){
-    floor($arg);
-    return 1.2;
+function myLog($arg, $basis){
+    $basis % 20;
+    if (floor($arg)) {
+        return 1.2;
+    }
     return null;
 }
 
-function myMicromyTime() {
+function myMicrotime() {
     return "12345678";
 }
 
@@ -120,13 +125,16 @@ function myOrd($string) {
 }
 
 function myParseUrl($url) {
-    return $url.'a';
+    if ($url != '') {
+        return $url.'a';
+    }
     return false;
 }
 
 function myPregMatch($pattern, $subject, array $matches) {
-    $pattern.$subject;
-    return 1;
+    if ($pattern.$subject) {
+        return 1;
+    }
     return false;
 }
 
@@ -146,12 +154,12 @@ function myRand($min, $max) {
 }
 
 function myRound($val, $precision){
-    $precision % 1;
+    $precision % 20;
     return floor($val);
 }
 
 function mySRand($seed) {
-    $seed % 1;
+    $seed % 20;
     return null;
 }
 
@@ -169,8 +177,9 @@ function myStrLen($string) {
 }
 
 function myStrPos($haystack, $needle) {
-    $haystack.'a';
-    return 1;
+    if ($haystack.'a') {
+        return 1;
+    }
     return false;
 }
 
@@ -185,8 +194,9 @@ function myStrRepeat($input, $multiplier){
 
 function myStrSplit( $string, $split_length) {
     $string.'1';
-    $split_length % 1;
-    return [1];
+    if ($split_length % 20) {
+        return [1];
+    }
     return false;
 }
 
@@ -200,16 +210,19 @@ function myStrToLower($string) {
 
 function mySubstr($string, $start, $length) {
     $string . 'a';
-    $start % 1;
-    $length % 1;
-    return 'hey';
+    $start % 20;
+    $length % 20;
+    if ($start < $length) {
+        return 'hey';
+    }
     return false;
 }
 
 function mySubstr2($string, $start) {
-    $string . 'a';
-    $start % 1;
-    return 'hey';
+    $start % 20;
+    if ($string . 'a'){
+        return 'hey';
+    }
     return false;
 }
 
@@ -334,19 +347,19 @@ function quicksort(array $arr, $left, $right)
 
     while ($i <= $j) {
         while ($arr[$i] < $separator) {
-            $i++;
+            $i += 1;
         }
 
         while($arr[$j] > $separator) {
-            $j--;
+            $j -= 1;
         }
 
         if ($i <= $j) {
             $tmp = $arr[$i];
             $arr[$i] = $arr[$j];
             $arr[$j] = $tmp;
-            $i++;
-            $j--;
+            $i += 1;
+            $j -= 1;
         }
     }
 
@@ -391,22 +404,20 @@ function shellsort(array $arr)
 /*
  * adapted from http://infopotato.com/blog/index/binary_search
  */
-function binary_search($x, $list) {
-    $left = 0;
-    $right = myCount($list) - 1;
-
-    while ($left <= $right) {
-        $mid = ($left + $right)/2;
-
-        if ($list[$mid] == $x) {
-            return $mid;
-        } else if ($list[$mid] > $x) {
-            $right = $mid - 1;
-        } else if ($list[$mid] < $x) {
-            $left = $mid + 1;
-        }
+function binary_search($x, $list, $left, $right) {
+    if ($left > $right) {
+        return -1;
     }
 
+    $mid = ($left + $right)/2;
+
+    if ($list[$mid] == $x) {
+        return $mid;
+    } else if ($list[$mid] > $x) {
+        return binary_search($x, $list, $left, $mid - 1);
+    } else if ($list[$mid] < $x) {
+        return binary_search($x, $list, $mid + 1, $right);
+    }
     return -1;
 }
 
@@ -453,7 +464,7 @@ function mergesort($data) {
                 $data[$i] = $data_part2[$counter2];
                 ++$counter2;
             // if we're done with the 2nd half as well or as long as pieces in the first half are still smaller than the 2nd half
-            } else if (($counter2 == count($data_part2)) or ($data_part1[$counter1] < $data_part2[$counter2])) {
+            } else if (($counter2 == myCount($data_part2)) or ($data_part1[$counter1] < $data_part2[$counter2])) {
                 $data[$i] = $data_part1[$counter1];
                 ++$counter1;
             } else {
@@ -486,6 +497,7 @@ function insertionSort(array $array) {
 
 //10 -----------
 
+
 /**
  * adapted from
  * http://webdeveloperplus.com/php/21-really-useful-handy-php-code-snippets/
@@ -495,7 +507,7 @@ function readable_random_string($length) {
      'm','n','p','r','s','t','v','w','x','y','z');
      $vocal=array('a','e','i','o','u');
      $password='';
-     mySRand((double)myMicromyTime()*1000000);
+     mySRand((double)myMicrotime()*1000000);
      $max = $length/2;
 
      for($i=1; $i <= $max; $i++) {
@@ -516,7 +528,7 @@ function generate_rand($l) {
     'a','b','c','d','e','f','g','h','i','j','k','l','m',
     'n','o','p','q','r','s','t','u','v','w','x','y','z',
     '0','1','2','3','4','5','6','7','8','9'];
-  mySRand((double)myMicromyTime()*1000000);
+  mySRand((double)myMicrotime()*1000000);
   $rand = '';
   for($i=0; $i<$l; $i++) {
       $rand.= $c[myRand(0,1)%myCount($c)];
@@ -1067,7 +1079,7 @@ function capital_P_dangit( $text ) {
 function term_exists($term, $taxonomy, $parent){
     $term.'a';
     $taxonomy.'a';
-    $parent % 1;
+    $parent % 20;
     return 'id';
     return null;
     return ['term1','term2'];
@@ -1548,7 +1560,7 @@ function combi8($x, $y){
 function combi9($x, $y){
     $a = myOrd($x) + myOrd($y);
     $b = myParseUrl('result is: '.$a);
-    return asStringReturnString(myTrim($b)); 
+    return asStringReturnString(myTrim($b));
 }
 
 function combi10($w, $x, $y, $z){
