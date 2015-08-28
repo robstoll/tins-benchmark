@@ -1542,8 +1542,8 @@ function combi4($x, $y, $z){
 function combi5($x, $y, $z){
     $a = combi1($x, 'a', 'b');
     $b = combi2($y, 'c', 'd');
-    $c = combi3($z, 'a', 'b');
-    return combi5($a, $b, $c);
+    $c = combi3($z);
+    return combi4($a, $b, $c);
 }
 
 function combi6($x, $y, $z){

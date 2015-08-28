@@ -1816,105 +1816,112 @@ public class Test
         return null;
     }
 
-////20 (total 70)-------------------------------
-//
-//    public static andExit($x) {
-//        $x and exit(0);
-//        return null;
-//    }
-//
-//
-//    public static bitwise1($x, $y, $z) {
-//        return $x & $y | $z;
-//    }
-//
-//    public static bitwise2($x, $y, $z) {
-//        return $x << 2 & ($y >> 1) ^ $z;
-//    }
-//
-//    public static arithmetic1($x, $y, $z) {
-//        return ($x + $y) * $z / 2;
-//    }
-//
-//    public static arithmetic2($x, $y, $z) {
-//        return abs(+($x / -$y) % $z);
-//    }
-//
-//    public static array1($x, $y) {
-//        $x[0] = $y;
-//        return $x;
-//    }
-//
-//    public static array2(array $x, $y) {
-//        $x + $y;
-//        return $x[3];
-//    }
-//
-////30 (total 80) ------------------------------
-//
-//    public static combi1($x, $y, $z){
-//        $a = myTruncate($x, 12, 10, $z);
-//        $email = encode_email($a, "blabla", 123);
-//        show_gravatar($email, $y, "pic", "good");
-//        return $a;
-//    }
-//
-//    public static combi2($x, $y, $z){
-//        $a = myAddCSlashes($x, "a..z");
-//        $b = str_replace($a, $y, $z);
-//        return myHtmlEntities($a);
-//    }
-//
-//    public static combi3($x){
-//        $password1 = generate_rand(12);
-//        $password2 = readable_random_string($_GET["number"]);
-//        return myArrayMerge([$password1], [$password2]);
-//    }
-//
-//    public static combi4($x, $y, $z){
-//        $a = isEven($x);
-//        $b = isOdd($y);
-//        return someLogic($a, $b, $z);;
-//    }
-//
-//    public static combi5($x, $y, $z){
-//        $a = combi1($x, "a", "b");
-//        $b = combi2($y, "c", "d");
-//        $c = combi3($z, "a", "b");
-//        return combi5($a, $b, $c);
-//    }
-//
-//    public static combi6($x, $y, $z){
-//        return bitwise1($x, bitwise2(1, $y, 3), 4);
-//    }
-//
-//    public static combi7($x, $y, $z){
-//        if($x > 10){
-//            return arithmetic1(1.2, $y, abs(1)) / $z;
-//        }
-//        return false;
-//    }
-//
-//    public static combi8($x, $y){
-//        $a = eo_php2xdate($y);
-//        myArrayPush($y, $a);
-//        return fnbx_html_tag($y);
-//    }
-//
-//    public static combi9($x, $y){
-//        $a = myOrd($x) + myOrd($y);
-//        $b = myParseUrl("result is: ".$a);
-//        return asStringReturnString(myTrim($b));
-//    }
-//
-//    public static combi10($w, $x, $y, $z){
-//        $a = countValue($x, $y);
-//        $b = myArrayMerge($x, $z);
-//        myArrayPush($b, 12);
-//        $c = countValue($b, $y);
-//        return ($a - $c) / $w;
-//    }
-//
+//20 (total 70)-------------------------------
+
+    public static Void andExit(Object $x) {
+        and(asBool($x), asBool(0));
+        return null;
+    }
+
+
+    public static Object bitwise1(Object $x, Object $y, Object $z) {
+        return oldSchoolBitwiseOr(oldSchoolBitwiseAnd($x, $y), $z);
+    }
+
+    public static Object bitwise2(Object $x, Object $y, Object $z) {
+        return oldSchoolBitwiseXor(oldSchoolBitwiseAnd(asInt($x) << 2, asInt($y) >> 1), $z);
+    }
+
+    public static Object arithmetic1(Object $x, Object $y, Object $z) {
+        return oldSchoolDivision(oldSchoolMultiplication(oldSchoolAddition($x, $y), $z), 2);
+    }
+
+    public static Object arithmetic2(Object $x, Object $y, Object $z) {
+        return Math.abs((Double) mod(oldSchoolDivision($x, -asDouble($y)), $z));
+    }
+
+    public static <T extends Map> T array1(T $x, Object $y) {
+        $x.put(0, $y);
+        return $x;
+    }
+
+    public static Object array2(Map $x, Map $y) {
+        myArrayMerge($x, $y);
+        return $x.get(3);
+    }
+
+//30 (total 80) ------------------------------
+
+    public static Object combi1(Object $x, Object $y, Object $z) {
+        Object $a = myTruncate($x, 12, 10, $z);
+        Object $email = encode_email($a, "blabla", 123);
+        show_gravatar($email, $y, "pic", "good");
+        return $a;
+    }
+
+    public static Object combi2(Object $x, Object $y, Object $z) {
+        Object $a = myAddCSlashes($x, "a..z");
+        Object $b = str_replace($a, $y, $z);
+        return myHtmlEntities($a);
+    }
+
+    public static Map<String, Object> $_GET;
+
+    public static Object combi3(Object $x) {
+        Object $password1 = generate_rand(12);
+        Object $password2 = readable_random_string($_GET.get("number"));
+        Map a = new HashMap();
+        a.put(0, $password1);
+        Map b = new HashMap();
+        b.put(0, $password2);
+
+        return myArrayMerge(a, b);
+    }
+
+    public static boolean combi4(Object $x, Object $y, Object $z) {
+        boolean $a = isEven($x);
+        boolean $b = isOdd($y);
+        return someLogic($a, $b, $z);
+    }
+
+    public static Object combi5(Object $x, Object $y, Object $z) {
+        Object $a = combi1($x, "a", "b");
+        Object $b = combi2($y, "c", "d");
+        Object $c = combi3($z);
+        return combi4($a, $b, $c);
+    }
+
+    public static Object combi6(Object $x, Object $y, Object $z) {
+        return bitwise1($x, bitwise2(1, $y, 3), 4);
+    }
+
+    public static Object combi7(Object $x, Object $y, Object $z) {
+        if (((Comparable) $x).compareTo(10) > 0) {
+            return arithmetic1(1.2, $y, oldSchoolDivision(Math.abs(1), $z));
+        }
+        return false;
+    }
+
+    public static Object combi8(Object $x, Map $y) {
+        String $a = eo_php2xdate($y);
+        myArrayPush($y, $a);
+        return fnbx_html_tag($y);
+    }
+
+    public static Object combi9(Object $x, Object $y) {
+        Object $a = myOrd($x) + myOrd($y);
+        Object $b = myParseUrl("result is: " + String.valueOf($a));
+        return asStringReturnString(myTrim($b));
+    }
+
+    public static Object combi10(Object $w, Map $x, Object $y, Map $z) {
+        int $a = countValue($x, $y);
+        Map $b = myArrayMerge($x, $z);
+        myArrayPush($b, 12);
+        int $c = countValue($b, $y);
+        return oldSchoolDivision($a - $c, $w);
+    }
+
 ////40 (total 90) -------------------
 //
 //    /********** start indirect recursive public statics ******************/
@@ -2148,6 +2155,42 @@ public class Test
                 return false;
             }
         }
+    }
+
+    private static Object oldSchoolBitwiseOr(Object $left, Object $right) {
+        //only a dummy implementation
+        if ($left instanceof Integer && $right instanceof Integer) {
+            return (Integer) $left | (Integer) $right;
+        } else if ($left instanceof Double && $right instanceof Double) {
+            return ((Double) $left).intValue() | ((Double) $right).intValue();
+        } else if ($left instanceof String && $right instanceof String) {
+            return (String) $left + (String) $right;
+        }
+        return asInt($left) | asInt($right);
+    }
+
+    private static Object oldSchoolBitwiseXor(Object $left, Object $right) {
+        //only a dummy implementation
+        if ($left instanceof Integer && $right instanceof Integer) {
+            return (Integer) $left ^ (Integer) $right;
+        } else if ($left instanceof Double && $right instanceof Double) {
+            return ((Double) $left).intValue() ^ ((Double) $right).intValue();
+        } else if ($left instanceof String && $right instanceof String) {
+            return (String) $left + (String) $right;
+        }
+        return asInt($left) ^ asInt($right);
+    }
+
+    private static Object oldSchoolBitwiseAnd(Object $left, Object $right) {
+        //only a dummy implementation
+        if ($left instanceof Integer && $right instanceof Integer) {
+            return (Integer) $left & (Integer) $right;
+        } else if ($left instanceof Double && $right instanceof Double) {
+            return ((Double) $left).intValue() & ((Double) $right).intValue();
+        } else if ($left instanceof String && $right instanceof String) {
+            return (String) $left + (String) $right;
+        }
+        return asInt($left) & asInt($right);
     }
 
     private static <T> T oldSchoolIncrement(T o) {
