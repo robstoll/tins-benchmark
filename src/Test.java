@@ -1922,128 +1922,127 @@ public class Test
         return oldSchoolDivision($a - $c, $w);
     }
 
-////40 (total 90) -------------------
-//
-//    /********** start indirect recursive public statics ******************/
-//
-//    public static foo8($x){
-//        if($x > 0){
-//            return bar8($x-1);
-//        }
-//        return $x;
-//    }
-//
-//    public static bar8($x){
-//        if($x > 0){
-//            return foo8($x-1);
-//        }
-//        return $x;
-//    }
-//
-//    // indirect recursive public static with parameter which has no constraint other than recursive public static,
-//// hence will not have a binding during the first iteration
-//    public static foo9($x) {
-//        return bar9($x);
-//    }
-//
-//    public static bar9($x){
-//        if($x > 0){
-//            return foo9($x-1);
-//        }
-//        return $x;
-//    }
-//
-//    // indirect recursive public static which does not change during first iteration,
-//// dependent public static changes though
-//    public static foo10($x){
-//        return foo10B($x);
-//    }
-//
-//    public static foo10B($x){
-//        return bar10($x);
-//    }
-//
-//    public static bar10($x){
-//        if($x > 0){
-//            return foo10($x-1);
-//        }
-//        return $x;
-//    }
-//
-//    //
-//    public static foo11($x, $y){
-//        return $x > 0 ?  bar11($x & $y, $y) : $x;
-//    }
-//
-//    public static bar11($x, $y){
-//        return $x > 10 ? foo11($x - $y, $y) : $y;
-//    }
-//
-//    //
-//    public static foo1($x, $y){
-//        return bar1($x, $y);
-//    }
-//
-//    public static bar1($x, $y){
-//        return $x > 10 ? foo1($x - $y, $y) : $y;
-//    }
-//
-//    //
-//    public static foo14($x, $y){
-//        return $x > 0 ?  bar14($x + $y, $y) : $x;
-//    }
-//
-//    public static bar14($x, $y){
-//        return $x > 10 ? foo14($x + $y, $y) : $y;
-//    }
-//
-//    //indirect recursive public static which produces more overloads once
-////the dependent public static is known.
-//    public static foo3($x, $y){
-//        return bar3($x, $y);
-//    }
-//
-//    public static bar3($x, $y){
-//        return $x > 10 ? foo3($x + $y, $y) : $y;
-//    }
-//
-//    //
-//    public static foo($x, $y){
-//        if($x){
-//            return $y;
-//        }
-//        return bar($y);
-//    }
-//
-//    public static bar($x){
-//        if($x > 0){
-//            return foo(false, $x);
-//        }
-//        return $x;
-//    }
-//
-//    //
-//    public static foo17($x, $y){
-//        return bar17($x, $y);
-//    }
-//
-//    public static bar17($x, $y){
-//        return $x > 10 ? foo17($x + $y, $y) : $y;
-//    }
-//
-//    //
-//    public static foo17B($x, $y){
-//        return bar17B($x, $y);
-//    }
-//
-//    public static bar17B($x, $y){
-//        return $x > 10 ? foo17B($x, $x + $y) : $y;
-//    }
-//
-//
-////10 ---------------------------- indirect recursive public static groups
-//
-//    ?>
+//40 (total 90) -------------------
+
+    /********** start indirect recursive public statics ******************/
+
+    public static Object foo8(Object $x){
+        if(((Comparable)$x).compareTo(0) > 0){
+            return bar8(oldSchoolSubtraction($x, 1));
+        }
+        return $x;
+    }
+
+    public static Object bar8(Object $x){
+        if(((Comparable)$x).compareTo(0) > 0){
+            return foo8(oldSchoolSubtraction($x, 1));
+        }
+        return $x;
+    }
+
+    // indirect recursive public static with parameter which has no constraint other than recursive public static,
+// hence will not have a binding during the first iteration
+    public static Object foo9(Object $x) {
+        return bar9($x);
+    }
+
+    public static Object bar9(Object $x){
+        if(((Comparable)$x).compareTo(0) > 0){
+            return foo9(oldSchoolSubtraction($x, 1));
+        }
+        return $x;
+    }
+
+    // indirect recursive public static which does not change during first iteration,
+// dependent public static changes though
+    public static Object foo10(Object $x){
+        return foo10B($x);
+    }
+
+    public static Object foo10B(Object $x){
+        return bar10($x);
+    }
+
+    public static Object bar10(Object $x){
+        if(((Comparable)$x).compareTo(0) > 0){
+            return foo10(oldSchoolSubtraction($x, 1));
+        }
+        return $x;
+    }
+
+    //
+    public static Object foo11(Object $x, Object $y){
+        return ((Comparable)$x).compareTo(0) > 0 ?  bar11(oldSchoolBitwiseAnd($x, $y), $y) : $x;
+    }
+
+    public static Object bar11(Object $x, Object $y){
+        return ((Comparable)$x).compareTo(10) >0 ? foo11(oldSchoolSubtraction($x ,$y), $y) : $y;
+    }
+
+    //
+    public static Object foo1(Object $x,Object $y){
+        return bar1($x, $y);
+    }
+
+    public static Object bar1(Object $x,Object $y){
+        return ((Comparable)$x).compareTo(10) > 0 ? foo1(oldSchoolSubtraction($x, $y), $y) : $y;
+    }
+
+    //
+    public static Object foo14(Object $x,Object $y){
+        return ((Comparable)$x).compareTo(0)>0 ?  bar14(oldSchoolAddition($x, $y), $y) : $x;
+    }
+
+    public static Object bar14(Object $x, Object $y){
+        return ((Comparable)$x).compareTo(10) > 0 ? foo14(oldSchoolAddition($x, $y), $y) : $y;
+    }
+
+    //indirect recursive public static which produces more overloads once
+//the dependent public static is known.
+    public static Object foo3(Object $x,Object  $y){
+        return bar3($x, $y);
+    }
+
+    public static Object bar3(Object $x,Object  $y){
+        return ((Comparable)$x).compareTo(10)> 0 ? foo3(oldSchoolAddition($x, $y), $y) : $y;
+    }
+
+    //
+    public static Object foo(Object $x,Object  $y){
+        if(asBool($x)){
+            return $y;
+        }
+        return bar($y);
+    }
+
+    public static Object bar(Object $x){
+        if(((Comparable)$x).compareTo(0) > 0){
+            return foo(false, $x);
+        }
+        return $x;
+    }
+
+    //
+    public static Object foo17(Object $x,Object  $y){
+        return bar17($x, $y);
+    }
+
+    public static Object bar17(Object $x, Object $y){
+        return ((Comparable)$x).compareTo(10) > 0 ? foo17(oldSchoolAddition($x, $y), $y) : $y;
+    }
+
+    //
+    public static Object foo17B(Object $x,Object  $y){
+        return bar17B($x, $y);
+    }
+
+    public static Object bar17B(Object $x,Object  $y){
+        return ((Comparable)$x).compareTo(10) > 0 ? foo17B($x, oldSchoolAddition($x, $y)) : $y;
+    }
+
+
+//10 ---------------------------- indirect recursive public static groups
+
 
     //some additional helper dummy methods;
 
