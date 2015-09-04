@@ -1,15 +1,13 @@
 <?php
-
 /**
  * Total of:
  *     50 functions found on the internet
  *     40 test functions
  *     21 indirect recursive functions (10 cycles)
- *     54  helper functions
- *  = 166 functions
- *  --> result in 319 TSPHP functions, ergo this script will be compared to a Java class with 319 equivalent methods
+ *     52  helper functions
+ *  = 164 functions
  *
- *  current lines of this file = 1683, lines in TSPHP file = 3375 (omits comments)
+ *     27 functions require a fallback to soft typing
  */
 
 // functions to simulate built-in function signatures.
@@ -65,7 +63,7 @@ function myCeil($value){
     return floor($value);
 }
 
-function myCount(array $x) {
+function myCount($x) {
     return 1;
 }
 
@@ -467,14 +465,14 @@ function mergesort($data) {
             // if we're done processing one half, take the rest from the 2nd half
             if($counter1 == myCount($data_part1)) {
                 $data[$i] = $data_part2[$counter2];
-                ++$counter2;
+                $counter2 += 1;
             // if we're done with the 2nd half as well or as long as pieces in the first half are still smaller than the 2nd half
             } else if (($counter2 == myCount($data_part2)) or ($data_part1[$counter1] < $data_part2[$counter2])) {
                 $data[$i] = $data_part1[$counter1];
-                ++$counter1;
+                $counter1 += 1;
             } else {
                 $data[$i] = $data_part2[$counter2];
-                ++$counter2;
+                $counter2 += 1;
             }
         }
     }
@@ -548,11 +546,13 @@ function generate_rand($l) {
 function encode_email($email, $linkText, $attrs) {
     $email = str_replace('@', '&#64;', $email);
     $email = str_replace('.', '&#46;', $email);
-    $email = myStrSplit($email, 5);
+    //does not make sense, is buggy, commented out
+    //$email = myStrSplit($email, 5);
 
     $linkText = str_replace('@', '&#64;', $linkText);
     $linkText = str_replace('.', '&#46;', $linkText);
-    $linkText = myStrSplit($linkText, 5);
+    //does not make sense, is buggy, commented out
+    //$linkText = myStrSplit($linkText, 5);
 
     $part1 = '<a href="ma';
     $part2 = 'ilto&#58;';
@@ -1283,28 +1283,8 @@ function a_star($start, $target, $map) {
     return FALSE;
 }
 
-
 const NODE_WIDTH = 51;
 const NODE_HEIGHT = 23;
-
-function a_star_test(){
-    $map = myArrayFill(0, NODE_HEIGHT, myStrRepeat('A', NODE_WIDTH));
-    generate(node(myRand(1, (NODE_WIDTH +NODE_WIDTH %2)/2-1)*2-1,
-                  myRand(1, (NODE_HEIGHT+NODE_HEIGHT%2)/2-1)*2-1), $map);
-
-    $start  = node(1, 1);
-    $target = node(NODE_WIDTH+NODE_WIDTH%2-3, NODE_HEIGHT+NODE_HEIGHT%2-3);
-
-    $path = a_star($start, $target, $map);
-
-    myArrayUnshift($path, $start);
-    foreach ($path as $i) {
-        $arr = coord($i);
-        $map[$arr[0]][$arr[1]] = '*';
-    }
-    return null;
-}
-
 
 function node($x, $y) {
     return $y * NODE_WIDTH + $x;
@@ -1332,6 +1312,24 @@ function heuristic($i, $j) {
     $arr_i = coord($i);
     $arr_j = coord($j);
     return abs($arr_i[0] - $arr_j[0]) + abs($arr_i[1] - $arr_j[1]);
+}
+
+function a_star_test(){
+    $map = myArrayFill(0, NODE_HEIGHT, myStrRepeat('A', NODE_WIDTH));
+    generate(node(myRand(1, (NODE_WIDTH +NODE_WIDTH %2)/2-1)*2-1,
+                  myRand(1, (NODE_HEIGHT+NODE_HEIGHT%2)/2-1)*2-1), $map);
+
+    $start  = node(1, 1);
+    $target = node(NODE_WIDTH+NODE_WIDTH%2-3, NODE_HEIGHT+NODE_HEIGHT%2-3);
+
+    $path = a_star($start, $target, $map);
+
+    myArrayUnshift($path, $start);
+    foreach ($path as $i) {
+        $arr = coord($i);
+        $map[$arr[0]][$arr[1]] = '*';
+    }
+    return null;
 }
 
 function generate($i, $map) {
@@ -1649,7 +1647,7 @@ function foo14($x, $y){
 }
 
 function bar14($x, $y){
-    return $x > 10 ? foo14($x + $y, $y) : $y;
+    return $x > 10 ? foo14($x , $y) : $y;
 }
 
 //indirect recursive function which produces more overloads once
