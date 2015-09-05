@@ -162,7 +162,7 @@ public class Main
         } else {
             System.out.println("test aborted");
         }
-
+        executor.shutdown();
     }
 
     private static boolean writeOutput(
