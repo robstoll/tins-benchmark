@@ -3,7 +3,7 @@ import java.util.Map;
 import java.util.Set;
 
 @SuppressWarnings({"unchecked", "UnusedDeclaration"})
-public class Test
+public class Test1
 {
 
     public static void main(String[] args) {
@@ -13,17 +13,8 @@ public class Test
 
     //------------------
 
-    public static String myAddCSlashes(Object $str, Object $charlist) {
-        return String.valueOf($str) + String.valueOf($charlist);
-    }
-
     public static boolean myArrayKeyExists(Object $key, Map $array) {
         return true;
-    }
-
-    public static Map myArrayFill(Object $start_index, Object $num, Object $value) {
-        int i = asInt($start_index) % asInt($num);
-        return new HashMap();
     }
 
     public static Map myArrayMerge(Map $a, Map $b) {
@@ -57,10 +48,6 @@ public class Test
         return new HashMap();
     }
 
-    public static int myArrayUnshift(Map $array, Object $value) {
-        return 1;
-    }
-
     private static Object floor(Object $value) {
         return $value;
     }
@@ -73,27 +60,10 @@ public class Test
         return 1;
     }
 
-    public static String myDate(Object $format, Object $timestamp) {
-        mod($timestamp, 20);
-        return String.valueOf($format) + "a";
-    }
-
-    public static String myDechex(Object $number) {
-        mod($number, 20);
-        return "f";
-    }
-
     public static boolean myEmpty(Object $var) {
         return false;
     }
 
-    public static String myGmDate(String $format, Object $timestamp) {
-        return myDate($format, $timestamp);
-    }
-
-    public static String myHtmlEntities(Object $string) {
-        return String.valueOf($string) + "1";
-    }
 
     public static boolean myInArray(Object $needle, Map $haystack) {
         return false;
@@ -107,32 +77,12 @@ public class Test
         return true;
     }
 
-    public static String myJoin(Object $glue, Map $pieces) {
-        return String.valueOf($glue) + "a";
-    }
-
     public static Double myLog(Object $arg, Object $basis) {
         mod($basis, 20);
         if (asBool(floor($arg))) {
             return 1.2;
         }
         return null;
-    }
-
-    public static String myMicrotime() {
-        return "12345678";
-    }
-
-    public static int myOrd(Object $string) {
-        String s = String.valueOf($string) + "a";
-        return 1;
-    }
-
-    public static Object myParseUrl(Object $url) {
-        if (!String.valueOf($url).equals("")) {
-            return String.valueOf($url) + "a";
-        }
-        return false;
     }
 
     public static Object myPregMatch(Object $pattern, Object $subject, Map $matches) {
@@ -151,34 +101,16 @@ public class Test
         return str_replace($pattern, $replacement, $subject);
     }
 
-    public static Map myPregSplit(Object $pattern, Object $subject, Object $limit, Object $flags) {
-        String s = String.valueOf($pattern) + String.valueOf($subject);
-        int i = asInt($limit) % asInt($flags);
-        return new HashMap();
-    }
-
-    public static int myRand(Object $min, Object $max) {
-        mod($min, $max);
-        return 1;
-    }
-
     public static Object myRound(Object $val, Object $precision) {
         mod($precision, 20);
         return floor($val);
     }
 
-    public static Void mySRand(Object $seed) {
-        mod($seed, 20);
-        return null;
-    }
 
     public static boolean myShuffle(Map $array) {
         return true;
     }
 
-    public static String mySprintf(Object $format, Object $arg) {
-        return String.valueOf($format) + String.valueOf($arg);
-    }
 
     public static int myStrLen(Object $string) {
         String s = String.valueOf($string) + String.valueOf("1");
@@ -195,15 +127,6 @@ public class Test
     public static Object myStrPos2(Object $haystack, Object $needle, Object $limit) {
         mod($limit, 20);
         return myStrPos($haystack, $needle);
-    }
-
-    public static Object myStrRpos(Object $haystack, Object $needle) {
-        return myStrPos($haystack, $needle);
-    }
-
-    public static String myStrRepeat(Object $input, Object $multiplier) {
-        mod($multiplier, 1);
-        return String.valueOf($input) + "a";
     }
 
     public static Object myStrSplit(Object $string, Object $split_length) {
@@ -238,10 +161,6 @@ public class Test
             return "hey";
         }
         return false;
-    }
-
-    public static int myTime() {
-        return 1;
     }
 
     public static String myTrim(Object $str) {
@@ -522,126 +441,6 @@ public class Test
      * adapted from
      * http://webdeveloperplus.com/php/21-really-useful-handy-php-code-snippets/
      */
-    public static String readable_random_string(Object $length) {
-        Map $conso = new HashMap();
-        $conso.put(0, "b");
-        $conso.put(1, "c");
-        $conso.put(2, "d");
-        $conso.put(3, "f");
-        $conso.put(4, "g");
-        $conso.put(5, "h");
-        $conso.put(6, "j");
-        $conso.put(7, "k");
-        $conso.put(8, "l");
-        $conso.put(9, "m");
-        $conso.put(10, "n");
-        $conso.put(11, "p");
-        $conso.put(12, "r");
-        $conso.put(13, "s");
-        $conso.put(14, "t");
-        $conso.put(15, "v");
-        $conso.put(16, "w");
-        $conso.put(17, "x");
-        $conso.put(18, "y");
-        $conso.put(19, "z");
-        Map $vocal = new HashMap();
-        $vocal.put(0, "a");
-        $vocal.put(1, "e");
-        $vocal.put(2, "i");
-        $vocal.put(3, "o");
-        $vocal.put(4, "u");
-        String $password = "";
-        mySRand(Double.parseDouble(myMicrotime()) * 1000000);
-        Object $max = oldSchoolDivision($length, 2);
-
-        for (int $i = 1; ((Comparable) $i).compareTo($max) <= 0; $i++) {
-            $password += $conso.get(myRand(0, 19));
-            $password += $vocal.get(myRand(0, 4));
-        }
-
-        return $password;
-    }
-
-    /**
-     * adapted from
-     * http://webdeveloperplus.com/php/21-really-useful-handy-php-code-snippets/
-     */
-    public static String generate_rand(Object $l) {
-        Map $c = new HashMap();
-        $c.put(0, "A");
-        $c.put(1, "B");
-        $c.put(2, "C");
-        $c.put(3, "D");
-        $c.put(4, "E");
-        $c.put(5, "F");
-        $c.put(6, "G");
-        $c.put(7, "H");
-        $c.put(8, "I");
-        $c.put(9, "J");
-        $c.put(10, "K");
-        $c.put(11, "L");
-        $c.put(12, "M");
-        $c.put(13, "N");
-        $c.put(14, "O");
-        $c.put(15, "P");
-        $c.put(16, "Q");
-        $c.put(17, "R");
-        $c.put(18, "S");
-        $c.put(19, "T");
-        $c.put(20, "U");
-        $c.put(21, "V");
-        $c.put(22, "W");
-        $c.put(23, "X");
-        $c.put(24, "Y");
-        $c.put(25, "Z");
-        $c.put(26, "a");
-        $c.put(27, "b");
-        $c.put(28, "c");
-        $c.put(29, "d");
-        $c.put(30, "e");
-        $c.put(31, "f");
-        $c.put(32, "g");
-        $c.put(33, "h");
-        $c.put(34, "i");
-        $c.put(35, "j");
-        $c.put(36, "k");
-        $c.put(37, "l");
-        $c.put(38, "m");
-        $c.put(39, "n");
-        $c.put(40, "o");
-        $c.put(41, "p");
-        $c.put(42, "q");
-        $c.put(43, "r");
-        $c.put(44, "s");
-        $c.put(45, "t");
-        $c.put(46, "u");
-        $c.put(47, "v");
-        $c.put(48, "w");
-        $c.put(49, "x");
-        $c.put(50, "y");
-        $c.put(51, "z");
-        $c.put(52, "0");
-        $c.put(53, "1");
-        $c.put(54, "2");
-        $c.put(55, "3");
-        $c.put(56, "4");
-        $c.put(57, "5");
-        $c.put(58, "6");
-        $c.put(59, "7");
-        $c.put(60, "8");
-        $c.put(61, "9");
-        mySRand(Double.parseDouble(myMicrotime()) * 1000000);
-        String $rand = "";
-        for (int $i = 0; ((Comparable) $i).compareTo($l) < 0; $i++) {
-            $rand += $c.get(myRand(0, 1) % myCount($c));
-        }
-        return $rand;
-    }
-
-    /**
-     * adapted from
-     * http://webdeveloperplus.com/php/21-really-useful-handy-php-code-snippets/
-     */
     public static String encode_email(Object $email, Object $linkText, Object $attrs) {
         $email = str_replace("@", "&#64;", $email);
         $email = str_replace(".", "&#46;", $email);
@@ -907,179 +706,9 @@ public class Test
         return Math.abs(asInt($maybeint));
     }
 
-//20 ----------------------------
-
-    /*
-     * copied from https://developer.wordpress.org/reference/public statics/add_cssclass/
-     */
-    public static Object add_cssclass(Object $add, Object $class) {
-        $class = myEmpty($class) ? $add : ($class = $class + " " + $add);
-        return $class;
-    }
-
-    public static boolean is_admin() {
-        return false;
-    }
-
-    public static boolean is_rtl() {
-        return true;
-    }
-
-    public static Void add_theme_support(Object $x) {
-        String s = String.valueOf($x) + "1";
-        return null;
-    }
-
-    /**
-     * adapted from https://developer.wordpress.org/reference/public statics/add_editor_style/
-     */
-    public static Void add_editor_style(Map $stylesheet, Map $editor_styles) {
-        add_theme_support("editor-style");
-
-        if (!is_admin()) {
-            return null;
-        }
-
-        if (is_rtl()) {
-            Object $rtl_stylesheet = str_replace(".css", "-rtl.css", $stylesheet.get(0));
-            $stylesheet.put(myCount($stylesheet), $rtl_stylesheet);
-        }
-
-        $editor_styles = myArrayMerge($editor_styles, $stylesheet);
-        return null;
-    }
-
-    /*
-     * adapted from https://developer.wordpress.org/reference/public statics/zeroise/
-     */
-    public static String zeroise(Object $number, Object $threshold) {
-        return mySprintf("%0" + String.valueOf($threshold) + "s", $number);
-    }
-
-    /**
-     * adapted from https://developer.wordpress.org/reference/public statics/antispambot/
-     */
-    public static Object antispambot(Object $email_address, Object $hex_encoding) {
-        String $email_no_spam_address = "";
-        for (int $i = 0, $len = myStrLen($email_address); $i < $len; $i++) {
-            int $j = myRand(0, oldSchoolAddition(1, $hex_encoding));
-            if ($j == 0) {
-                $email_no_spam_address += "&#" + myOrd(((Map) $email_address).get($i)) + ";";
-            } else if ($j == 1) {
-                $email_no_spam_address += String.valueOf($email_address).charAt($i);
-            } else if ($j == 2) {
-                $email_no_spam_address += "%" + zeroise(myDechex(myOrd(String.valueOf($email_address).charAt($i))), 2);
-            }
-        }
-
-        return str_replace("@", "&#64;", $email_no_spam_address);
-    }
-
-
-    /*
-     * Copied from https://developer.wordpress.org/reference/public statics/allowed_tags/
-     */
-    public static String allowed_tags(Object $allowedtags) {
-        String $allowed = "";
-        Set<Map.Entry> set = ((Map) $allowedtags).entrySet();
-        for (Map.Entry entry : set) {
-            Object $tag = entry.getKey();
-            Object $attributes = entry.getValue();
-            $allowed += "<" + String.valueOf($tag);
-            if (0 < myCount((Map) $attributes)) {
-                set = ((Map) $attributes).entrySet();
-                for (Map.Entry entry2 : set) {
-                    Object $attribute = entry2.getKey();
-                    Object $limits = entry2.getValue();
-                    $allowed += " " + String.valueOf($attribute) + "=\"\"";
-                }
-            }
-            $allowed += "> ";
-        }
-        return myHtmlEntities($allowed);
-    }
-
-
-    public static Object apply_filters(Object $tag, Object $value, Object $var) {
-        String s = String.valueOf($tag) + "a";
-        return null;
-    }
-
-    public static String home_url() {
-        return "http://...";
-    }
-
-    /*
-     * adapted from https://developer.wordpress.org/reference/public statics/wp_validate_redirect/
-     */
-    public static Object wp_validate_redirect(Object $location, Object $default) {
-        $location = myTrim($location);
-        // browsers will assume "http" is your protocol, and will obey a redirect to a URL starting with "//"
-        if (mySubstr($location, 0, 2) == "//") {
-            $location = "http:" + String.valueOf($location);
-        }
-
-        // In php 5 myParseUrl may fail if the URL query part contains http://, bug #38143
-        Object $cut;
-        Object $test = asBool(($cut = myStrPos($location, "?"))) ? mySubstr($location, 0, $cut) : $location;
-
-        Object $lp = myParseUrl($test);
-
-        // Give up if malformed URL
-        if (false == $lp) {
-            return $default;
-        }
-
-        // Allow only http and https schemes. No data:, etc.
-        if (myIsset(((Map) $lp).get("scheme")) && !("http" == ((Map) $lp).get("scheme")
-                || "https" == ((Map) $lp).get("scheme"))) {
-            return $default;
-        }
-
-        // Reject if scheme is set but host is not. This catches urls like https:host.com for which myParseUrl does
-        // not set the host field.
-        if (myIsset(((Map) $lp).get("scheme")) && !myIsset(((Map) $lp).get("host"))) {
-            return $default;
-        }
-
-        Object $wpp = myParseUrl(home_url());
-
-        /**
-         * Filter the whitelist of hosts to redirect to.
-         *
-         * @since 2.3.0
-         *
-         * @param array       $hosts An array of allowed hosts.
-         * @param bool|string $host  The parsed host; empty if not isset.
-         */
-        Map $a = new HashMap();
-        $a.put(0, ((Map) $wpp).get("host"));
-        Map $allowed_hosts = (Map) apply_filters("allowed_redirect_hosts", $a,
-                myIsset(((Map) $lp).get("host")) ? ((Map) $lp).get("host") : "");
-
-        if (myIsset(((Map) $lp).get("host")) && (!myInArray(((Map) $lp).get("host"), $allowed_hosts)
-                && ((Map) $lp).get("host") != myStrToLower(((Map) $wpp).get("host")))) {
-            $location = $default;
-        }
-
-        return $location;
-    }
-
-    /**
-     * adapted from https://developer.wordpress.org/reference/public statics/backslashit/
-     */
-    public static String backslashit(Object $string) {
-        if (myIsset(String.valueOf($string).charAt(0)) && String.valueOf($string).charAt(0) >= '0' && String.valueOf
-                ($string).charAt(0) <= '9') {
-            $string = "\\\\" + $string;
-        }
-        return myAddCSlashes($string, "A..Za..z");
-    }
-
     public static <T> T get_option(T $option) {
         return $option;
     }
-
 
     /*
      * https://developer.wordpress.org/reference/public statics/balancetags/
@@ -1092,7 +721,7 @@ public class Test
         }
     }
 
-    /**
+    /*
      * adapted from https://developer.wordpress.org/reference/public statics/backslashit/
      */
     public static Object force_balance_tags(Object $text) {
@@ -1235,86 +864,8 @@ public class Test
         return $newtext;
     }
 
-    /*
-     * adapted from https://developer.wordpress.org/reference/public statics/before_last_bar/
-     */
-    public static Object before_last_bar(Object $string) {
-        Object $last_bar = myStrRpos($string, "|");
-        if (false == $last_bar) {
-            return $string;
-        } else {
-            return mySubstr($string, 0, $last_bar);
-        }
-    }
+    //20 ----------------------------
 
-////30------------------------------
-
-    public static Map get_body_class(Object $class) {
-        return new HashMap();
-    }
-
-    /*
-     * adapted from https://developer.wordpress.org/reference/public statics/body_class/
-     */
-    public static Void body_class(Object $class) {
-        // Separates classes with a single space, collates classes for body element
-        System.out.println("class=\"" + myJoin(" ", get_body_class($class)) + "\"");
-        return null;
-    }
-
-    /*
-     * adapted from https://developer.wordpress.org/reference/public statics/bool_from_yn/
-     */
-    public static boolean bool_from_yn(Object $yn) {
-        return (myStrToLower(String.valueOf($yn)).equals("y"));
-    }
-
-    /*
-     * adapted from https://developer.wordpress.org/reference/public statics/calendar_week_mod/
-     */
-    public static Number calendar_week_mod(Object $num) {
-        int $base = 7;
-        return oldSchoolSubtraction($num, oldSchoolMultiplication($base, floor(oldSchoolDivision($num, $base))));
-    }
-
-    public static String current_filter() {
-        return "filter";
-    }
-
-    public static String _x(Object $text, Object $context) {
-        return String.valueOf($text) + String.valueOf($context);
-    }
-
-    /*
-     * adapted from https://developer.wordpress.org/reference/public statics/capital_p_dangit/
-     */
-    public static Object capital_P_dangit(Object $text) {
-        // Simple replacement for titles
-        String $current_filter = current_filter();
-        if ("the_title".equals($current_filter) || "wp_title".equals($current_filter)) {
-            return str_replace("Wordpress", "WordPress", $text);
-        }
-        // Still here? Use the more judicious replacement
-        Object $dblq = false;
-        if (false == $dblq) {
-            $dblq = _x("&#8220;", "opening curly double quote");
-        }
-        Map a1 = new HashMap();
-        a1.put(0, " Wordpress");
-        a1.put(1, "&#8216;Wordpress");
-        a1.put(2, String.valueOf($dblq) + "Wordpress");
-        a1.put(3, ">Wordpress");
-        a1.put(4, "(Wordpress");
-
-        Map a2 = new HashMap();
-        a2.put(0, " WordPress");
-        a2.put(1, "&#8216;WordPress");
-        a2.put(2, String.valueOf($dblq) + "WordPress");
-        a2.put(3, ">WordPress");
-        a2.put(4, "(WordPress");
-
-        return str_replace(a1, a2, $text);
-    }
 
     public static Object term_exists(Object $term, Object $taxonomy, Object $parent) {
         String s = String.valueOf($term) + "a";
@@ -1355,66 +906,7 @@ public class Test
         return $content;
     }
 
-    /*
-     * adapted from https://developer.wordpress.org/reference/public statics/convert_smilies/
-     */
-    public static Object convert_smilies(Object $text, Object $wp_smiliessearch) {
-        Object $output = "";
-        if (asBool(get_option("use_smilies")) && !myEmpty($wp_smiliessearch)) {
-            // HTML loop taken from texturize public static, could possible be consolidated
-            Map $textarr = myPregSplit("/(<.*>)/U", $text, -1, 1); // capture the tags as well as in between
-            int $stop = myCount($textarr);// loop stuff
-
-            // Ignore proessing of specific tags
-            String $tags_to_ignore = "code|pre|style|script|textarea";
-            String $ignore_block_element = "";
-
-            for (int $i = 0; $i < $stop; $i++) {
-                Object $content = $textarr.get($i);
-
-                Map $matches = new HashMap();
-                // If we"re in an ignore block, wait until we find its closing tag
-                if ("".equals($ignore_block_element) && asBool(myPregMatch(
-                        "/^<(" + $tags_to_ignore + ")>/", $content, $matches))) {
-                    $ignore_block_element = (String) $matches.get(1);
-                }
-
-                // If it"s not a tag and not in ignore block
-                if ("".equals($ignore_block_element) && myStrLen($content) > 0 && "<" != ((Map) $content).get(0)) {
-                    // $content = preg_replace_callback( $wp_smiliessearch, "translate_smiley", $content );
-                }
-
-                // did we exit ignore block
-                if (!"".equals($ignore_block_element) && "</" + $ignore_block_element + ">" == $content) {
-                    $ignore_block_element = "";
-                }
-
-                $output = String.valueOf($output) + $content;
-            }
-        } else {
-            // return default text.
-            $output = $text;
-        }
-        return $output;
-    }
-
-    /*
-     * adapted from https://developer.wordpress.org/reference/public statics/current_time/
-     */
-    public static Object current_myTime(Object $type, Object $gmt) {
-        if ($type == "mysql") {
-            return asBool($gmt) ? myGmDate("Y-m-d H:i:s", myTime()) : myGmDate("Y-m-d H:i:s",
-                    oldSchoolAddition(myTime(), (oldSchoolMultiplication(get_option("gmt_offset"), 60 * 60))));
-        } else if ($type == "myTimestamp") {
-            return asBool($gmt) ? myTime() :
-                    oldSchoolAddition(myTime(), oldSchoolMultiplication(get_option("gmt_offset"), 60 * 60));
-        } else {
-            return asBool($gmt) ? myDate($type, myTime()) : myDate($type,
-                    oldSchoolAddition(myTime(), oldSchoolMultiplication(get_option("gmt_offset"), 60 * 60)));
-        }
-    }
-
-//38 ------------
+//22 ------------
 
     /**
      * ************** A* implementation, **********
@@ -1546,25 +1038,6 @@ public class Test
     public static int NODE_WIDTH = 51;
     public static int NODE_HEIGHT = 23;
 
-    public static Void a_star_test() {
-        Map $map = myArrayFill(0, NODE_HEIGHT, myStrRepeat("A", NODE_WIDTH));
-        generate(node(myRand(1, (NODE_WIDTH + NODE_WIDTH % 2) / 2 - 1) * 2 - 1,
-                myRand(1, (NODE_HEIGHT + NODE_HEIGHT % 2) / 2 - 1) * 2 - 1), $map);
-
-        Number $start = node(1, 1);
-        Number $target = node(NODE_WIDTH + NODE_WIDTH % 2 - 3, NODE_HEIGHT + NODE_HEIGHT % 2 - 3);
-
-        Object $path = a_star($start, $target, $map);
-
-        myArrayUnshift((Map) $path, $start);
-        for (Object $i : ((Map) $path).values()) {
-            Map $arr = coord($i);
-            ((Map) $map.get($arr.get(0))).put($arr.get(1), "*");
-        }
-        return null;
-    }
-
-
     public static Number node(Object $x, Object $y) {
         return oldSchoolMultiplication($y, oldSchoolAddition(NODE_WIDTH, $x));
     }
@@ -1689,10 +1162,6 @@ public class Test
                                 $a12)), $a13)), $a14)), $a15)), $a16)), $a17)), $a18)), $a19)), $a20));
     }
 
-    public static Object endless() {
-        return endless();
-    }
-
     //direct recursive public statics and soft typing
     public static Object test(Object $a_0) {
         Object $a = $a_0;
@@ -1707,43 +1176,12 @@ public class Test
                 : $n;
     }
 
-    public static Number add(Object $x, Object $y) {
-        return oldSchoolAddition($x, $y);
-    }
-
-    public static Number fib(Object $n) {
-        return ((Comparable) $n).compareTo(0) > 0
-                ? oldSchoolAddition(fib(oldSchoolSubtraction($n, 1)), fib(oldSchoolSubtraction($n, 2)))
-                : 1;
-    }
-
-    public static Object fac(Object $n) {
-        return ((Comparable) $n).compareTo(0) > 0
-                ? oldSchoolMultiplication($n, fac($n))
-                : $n;
-    }
-
-    public static boolean startsWith(Object $text, Object $value) {
-        return asInt(myStrPos($text, $value)) == 0;
-    }
-
     public static Number withImplicitReturn(Object $x) {
         if (asBool($x)) {
             return oldSchoolAddition($x, 1);
         }
         return null;
     }
-
-    public static Object wrapIt(Object $value, Object $wrapIt) {
-        if (asBool($wrapIt)) {
-            Map map = new HashMap();
-            map.put(0, $value);
-            return map;
-        }
-        return $value;
-    }
-
-// 10 (total 60) -------------------------------
 
     /* Fallback to soft typing required */
     public static Object addOne(Object $x) {
@@ -1760,20 +1198,6 @@ public class Test
         return oldSchoolAddition($x, 1);
     }
 
-    public static <T> T identity(T $x) {
-        return $x;
-    }
-
-    public static Object convertibleToString(Object $x) {
-        System.out.println(String.valueOf($x));
-        return identity($x);
-    }
-
-    public static String asStringReturnString(Object $x) {
-        System.out.println(String.valueOf($x));
-        return (String) $x;
-    }
-
     public static int countValue(Map $arr, Object $value) {
         int $count = 0;
         for (int $i = 0; $i < myCount($arr); ++$i) {
@@ -1782,14 +1206,6 @@ public class Test
             }
         }
         return $count;
-    }
-
-    public static boolean isEven(Object $x) {
-        return asInt(mod($x, 2)) == 0;
-    }
-
-    public static boolean isOdd(Object $x) {
-        return asInt(mod($x, 2)) == 1;
     }
 
     private static boolean or(boolean $x, boolean $y) {
@@ -1811,118 +1227,9 @@ public class Test
         return $a == $b;
     }
 
-    public static Void orExit(Object $x) {
-        or(asBool($x), asBool(-1));
-        return null;
-    }
-
-//20 (total 70)-------------------------------
-
-    public static Void andExit(Object $x) {
-        and(asBool($x), asBool(0));
-        return null;
-    }
-
-
-    public static Object bitwise1(Object $x, Object $y, Object $z) {
-        return oldSchoolBitwiseOr(oldSchoolBitwiseAnd($x, $y), $z);
-    }
-
-    public static Object bitwise2(Object $x, Object $y, Object $z) {
-        return oldSchoolBitwiseXor(oldSchoolBitwiseAnd(asInt($x) << 2, asInt($y) >> 1), $z);
-    }
-
     public static Object arithmetic1(Object $x, Object $y, Object $z) {
         return oldSchoolDivision(oldSchoolMultiplication(oldSchoolAddition($x, $y), $z), 2);
     }
-
-    public static Object arithmetic2(Object $x, Object $y, Object $z) {
-        return Math.abs((Double) mod(oldSchoolDivision($x, -asDouble($y)), $z));
-    }
-
-    public static <T extends Map> T array1(T $x, Object $y) {
-        $x.put(0, $y);
-        return $x;
-    }
-
-    public static Object array2(Map $x, Map $y) {
-        myArrayMerge($x, $y);
-        return $x.get(3);
-    }
-
-//30 (total 80) ------------------------------
-
-    public static Object combi1(Object $x, Object $y, Object $z) {
-        Object $a = myTruncate($x, 12, 10, $z);
-        Object $email = encode_email($a, "blabla", 123);
-        show_gravatar($email, $y, "pic", "good");
-        return $a;
-    }
-
-    public static Object combi2(Object $x, Object $y, Object $z) {
-        Object $a = myAddCSlashes($x, "a..z");
-        Object $b = str_replace($a, $y, $z);
-        return myHtmlEntities($a);
-    }
-
-    public static Map<String, Object> $_GET;
-
-    public static Object combi3(Object $x) {
-        Object $password1 = generate_rand(12);
-        Object $password2 = readable_random_string($_GET.get("number"));
-        Map a = new HashMap();
-        a.put(0, $password1);
-        Map b = new HashMap();
-        b.put(0, $password2);
-
-        return myArrayMerge(a, b);
-    }
-
-    public static boolean combi4(Object $x, Object $y, Object $z) {
-        boolean $a = isEven($x);
-        boolean $b = isOdd($y);
-        return someLogic($a, $b, $z);
-    }
-
-    public static Object combi5(Object $x, Object $y, Object $z) {
-        Object $a = combi1($x, "a", "b");
-        Object $b = combi2($y, "c", "d");
-        Object $c = combi3($z);
-        return combi4($a, $b, $c);
-    }
-
-    public static Object combi6(Object $x, Object $y, Object $z) {
-        return bitwise1($x, bitwise2(1, $y, 3), 4);
-    }
-
-    public static Object combi7(Object $x, Object $y, Object $z) {
-        if (((Comparable) $x).compareTo(10) > 0) {
-            return arithmetic1(1.2, $y, oldSchoolDivision(Math.abs(1), $z));
-        }
-        return false;
-    }
-
-    public static Object combi8(Object $x, Map $y) {
-        String $a = eo_php2xdate($y);
-        myArrayPush($y, $a);
-        return fnbx_html_tag($y);
-    }
-
-    public static Object combi9(Object $x, Object $y) {
-        Object $a = myOrd($x) + myOrd($y);
-        Object $b = myParseUrl("result is: " + String.valueOf($a));
-        return asStringReturnString(myTrim($b));
-    }
-
-    public static Object combi10(Object $w, Map $x, Object $y, Map $z) {
-        int $a = countValue($x, $y);
-        Map $b = myArrayMerge($x, $z);
-        myArrayPush($b, 12);
-        int $c = countValue($b, $y);
-        return oldSchoolDivision($a - $c, $w);
-    }
-
-//40 (total 90) -------------------
 
     /********** start indirect recursive public statics ******************/
 
@@ -1987,59 +1294,6 @@ public class Test
     public static Object bar1(Object $x,Object $y){
         return ((Comparable)$x).compareTo(10) > 0 ? foo1(oldSchoolSubtraction($x, $y), $y) : $y;
     }
-
-    //
-    public static Object foo14(Object $x,Object $y){
-        return ((Comparable)$x).compareTo(0)>0 ?  bar14(oldSchoolAddition($x, $y), $y) : $x;
-    }
-
-    public static Object bar14(Object $x, Object $y){
-        return ((Comparable)$x).compareTo(10) > 0 ? foo14(oldSchoolAddition($x, $y), $y) : $y;
-    }
-
-    //indirect recursive public static which produces more overloads once
-//the dependent public static is known.
-    public static Object foo3(Object $x,Object  $y){
-        return bar3($x, $y);
-    }
-
-    public static Object bar3(Object $x,Object  $y){
-        return ((Comparable)$x).compareTo(10)> 0 ? foo3(oldSchoolAddition($x, $y), $y) : $y;
-    }
-
-    //
-    public static Object foo(Object $x,Object  $y){
-        if(asBool($x)){
-            return $y;
-        }
-        return bar($y);
-    }
-
-    public static Object bar(Object $x){
-        if(((Comparable)$x).compareTo(0) > 0){
-            return foo(false, $x);
-        }
-        return $x;
-    }
-
-    //
-    public static Object foo17(Object $x,Object  $y){
-        return bar17($x, $y);
-    }
-
-    public static Object bar17(Object $x, Object $y){
-        return ((Comparable)$x).compareTo(10) > 0 ? foo17(oldSchoolAddition($x, $y), $y) : $y;
-    }
-
-    //
-    public static Object foo17B(Object $x,Object  $y){
-        return bar17B($x, $y);
-    }
-
-    public static Object bar17B(Object $x,Object  $y){
-        return ((Comparable)$x).compareTo(10) > 0 ? foo17B($x, oldSchoolAddition($x, $y)) : $y;
-    }
-
 
 //10 ---------------------------- indirect recursive public static groups
 

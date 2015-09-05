@@ -4,7 +4,7 @@
  *     50 functions found on the internet
  *     40 test functions
  *     21 indirect recursive functions (10 cycles)
- *     52  helper functions
+ *     53  helper functions
  *  = 164 functions
  *
  *     27 functions require a fallback to soft typing
@@ -601,7 +601,7 @@ function myTruncate($string, $limit, $break, $pad) {
         return $string;
 
     // is $break present between $limit and the end of the string?
-    if(false !== ($breakpoint = myStrPos($string, $break, $limit))) {
+    if(false !== ($breakpoint = myStrPos2($string, $break, $limit))) {
         if($breakpoint < myStrLen($string) - 1) {
             $string = mySubstr($string, 0, $breakpoint) . $pad;
         }

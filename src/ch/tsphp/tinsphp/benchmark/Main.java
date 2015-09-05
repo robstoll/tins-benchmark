@@ -22,46 +22,101 @@ public class Main
     public static void main(String[] args) throws IOException, InterruptedException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String date = dateFormat.format(new Date());
-        PrintWriter writer1 = new PrintWriter("tmp/times-tinsphp_" + date + ".txt", "UTF-8");
-        PrintWriter writer2 = new PrintWriter("tmp/times-java_" + date + ".txt", "UTF-8");
-        PrintWriter writer3 = new PrintWriter("tmp/times-tinsphp2_" + date + ".txt", "UTF-8");
-        ProcessBuilder builder1 = new ProcessBuilder("java",
-                "-cp", "\"D:\\tins-benchmark\\lib\\*\"",
-                "-Xms64m",
-                "-Xmx128m",
-                "ch.tsphp.tinsphp.Main",
-                "\"D:\\tins-benchmark\\src\\test.php\"",
-                "\"D:\\tins-benchmark\\tmp\\test.tsphp\"");
-        builder1.redirectErrorStream(true);
-        ProcessBuilder builder2 = new ProcessBuilder("javac",
-                "-d", "\"D:\\tins-benchmark\\tmp\"",
-                "\"D:\\tins-benchmark\\src\\Test.java\"",
-                "-J-Xms64m",
-                "-J-Xmx128m");
-        builder2.redirectErrorStream(true);
-        ProcessBuilder builder3 = new ProcessBuilder("java",
-                "-cp", "\"D:\\tins-benchmark\\parallel_lib\\*\"",
-                "-Xms64m",
-                "-Xmx128m",
-                "ch.tsphp.tinsphp.Main",
-                "\"D:\\tins-benchmark\\src\\test.php\"",
-                "\"D:\\tins-benchmark\\tmp\\test.tsphp\"");
-        builder3.redirectErrorStream(true);
+        String[] names = new String[]{
+                "t0_java",
+                "t0_sequential",
+                "t0_parallel_32",
+//                "t1_java",
+//                "t1_sequential",
+//                "t1_parallel_32",
+//                "t2_java",
+//                "t2_sequential",
+//                "t2_parallel_32",
+        };
+        PrintWriter[] writers = new PrintWriter[]{
+                new PrintWriter("tmp/t0_java_" + date + ".txt", "UTF-8"),
+                new PrintWriter("tmp/t0_sequential_" + date + ".txt", "UTF-8"),
+                new PrintWriter("tmp/t0_parallel_32_" + date + ".txt", "UTF-8"),
+//                new PrintWriter("tmp/t1_java_" + date + ".txt", "UTF-8"),
+//                new PrintWriter("tmp/t1_sequential_" + date + ".txt", "UTF-8"),
+//                new PrintWriter("tmp/t1_parallel_32_" + date + ".txt", "UTF-8"),
+//                new PrintWriter("tmp/t2_java_" + date + ".txt", "UTF-8"),
+//                new PrintWriter("tmp/t2_sequential_" + date + ".txt", "UTF-8"),
+//                new PrintWriter("tmp/t2_parallel_32_" + date + ".txt", "UTF-8"),
+        };
+        ProcessBuilder[] builders = new ProcessBuilder[]{
+                new ProcessBuilder("javac",
+                        "-d", "\"D:\\tins-benchmark\\tmp\"",
+                        "\"D:\\tins-benchmark\\src\\Test0.java\"",
+                        "-J-Xms64m",
+                        "-J-Xmx128m"),
+                new ProcessBuilder("java",
+                        "-cp", "\"D:\\tins-benchmark\\lib\\*\"",
+                        "-Xms64m",
+                        "-Xmx128m",
+                        "ch.tsphp.tinsphp.Main",
+                        "\"D:\\tins-benchmark\\src\\test0.php\"",
+                        "\"D:\\tins-benchmark\\tmp\\test.tsphp\""),
+                new ProcessBuilder("java",
+                        "-cp", "\"D:\\tins-benchmark\\parallel_lib\\*\"",
+                        "-Xms64m",
+                        "-Xmx128m",
+                        "ch.tsphp.tinsphp.Main",
+                        "\"D:\\tins-benchmark\\src\\test0.php\"",
+                        "\"D:\\tins-benchmark\\tmp\\test.tsphp\""),
+                //
+//                new ProcessBuilder("javac",
+//                        "-d", "\"D:\\tins-benchmark\\tmp\"",
+//                        "\"D:\\tins-benchmark\\src\\Test1.java\"",
+//                        "-J-Xms64m",
+//                        "-J-Xmx128m"),
+//                new ProcessBuilder("java",
+//                        "-cp", "\"D:\\tins-benchmark\\lib\\*\"",
+//                        "-Xms64m",
+//                        "-Xmx128m",
+//                        "ch.tsphp.tinsphp.Main",
+//                        "\"D:\\tins-benchmark\\src\\test1.php\"",
+//                        "\"D:\\tins-benchmark\\tmp\\test.tsphp\""),
+//                new ProcessBuilder("java",
+//                        "-cp", "\"D:\\tins-benchmark\\parallel_lib\\*\"",
+//                        "-Xms64m",
+//                        "-Xmx128m",
+//                        "ch.tsphp.tinsphp.Main",
+//                        "\"D:\\tins-benchmark\\src\\test1.php\"",
+//                        "\"D:\\tins-benchmark\\tmp\\test.tsphp\""),
+//                //
+//                new ProcessBuilder("javac",
+//                        "-d", "\"D:\\tins-benchmark\\tmp\"",
+//                        "\"D:\\tins-benchmark\\src\\Test2.java\"",
+//                        "-J-Xms64m",
+//                        "-J-Xmx128m"),
+//                new ProcessBuilder("java",
+//                        "-cp", "\"D:\\tins-benchmark\\lib\\*\"",
+//                        "-Xms64m",
+//                        "-Xmx128m",
+//                        "ch.tsphp.tinsphp.Main",
+//                        "\"D:\\tins-benchmark\\src\\test2.php\"",
+//                        "\"D:\\tins-benchmark\\tmp\\test.tsphp\""),
+//                new ProcessBuilder("java",
+//                        "-cp", "\"D:\\tins-benchmark\\parallel_lib\\*\"",
+//                        "-Xms64m",
+//                        "-Xmx128m",
+//                        "ch.tsphp.tinsphp.Main",
+//                        "\"D:\\tins-benchmark\\src\\test2.php\"",
+//                        "\"D:\\tins-benchmark\\tmp\\test.tsphp\""),
+        };
+        for (ProcessBuilder builder : builders) {
+            builder.redirectErrorStream(true);
+        }
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
         boolean ok = true;
-        for (int i = 0; i < 615; ++i) {
+        int numberOfTests = builders.length * 302;
+        for (int i = 0; i < numberOfTests; ++i) {
+            ProcessBuilder builder = builders[i % builders.length];
             long start = System.nanoTime();
-            final Process process;
-            if (i % 3 == 0) {
-                process = builder1.start();
-            } else if (i % 3 == 1) {
-                process = builder2.start();
-            } else {
-                process = builder3.start();
-            }
-
+            final Process process = builder.start();
             Future<Integer> future = executor.submit(new Callable<Integer>()
             {
                 @Override
@@ -82,60 +137,46 @@ public class Main
                 errCode = -1;
             }
             long stop = System.nanoTime();
-            if (writeOutput(writer1, writer2, writer3, i, start, stop, process, errCode)) {
+            if (writeOutput(writers, names, i, stop - start, process, errCode)) {
                 ok = false;
                 break;
             }
             File file;
-            if (i % 2 == 0) {
+            if (i % 3 == 0){
+                file = new File("D:\\tins-benchmark\\tmp\\Test0.class");
+//            }else if (i % 8 == 4) {
+//                file = new File("D:\\tins-benchmark\\tmp\\Test2.class");
+            }else {
                 file = new File("D:\\tins-benchmark\\tmp\\test.tsphp");
-            } else {
-                file = new File("D:\\tins-benchmark\\tmp\\Test.class");
             }
             file.delete();
         }
-        writer1.flush();
-        writer1.close();
-        writer2.flush();
-        writer2.close();
-        writer3.flush();
-        writer3.close();
+
+        for (PrintWriter writer : writers) {
+            writer.flush();
+            writer.close();
+        }
+
         if (ok) {
             System.out.println("tests done");
         } else {
             System.out.println("test aborted");
         }
+
     }
 
     private static boolean writeOutput(
-            PrintWriter writer1, PrintWriter writer2, PrintWriter writer3,
-            int i, long start, long stop, Process process, int errCode) throws IOException {
+            PrintWriter[] writers, String[] names, int i, long time, Process process, int errCode) throws IOException {
+
         if (errCode == 0) {
-            if (i % 3 == 0) {
-                if (i >= 15) {
-                    writer1.println(stop - start);
-                    if (i % 10 == 0) {
-                        writer1.flush();
-                    }
+            PrintWriter writer = writers[i % writers.length];
+            if (i >= writers.length * 2) {
+                writer.println(time);
+                if (i % 10 == i % writers.length) {
+                    writer.flush();
                 }
-                System.out.println("tinsphp   " + i + ": " + (stop - start));
-            } else if (i % 3 == 1) {
-                if (i >= 15) {
-                    writer2.println(stop - start);
-                    if (i % 10 == 1) {
-                        writer2.flush();
-                    }
-                }
-                System.out.println("java      " + i + ": " + (stop - start));
-            } else {
-                if (i >= 15) {
-                    writer3.println(stop - start);
-                    if (i % 10 == 2) {
-                        writer3.flush();
-                    }
-                }
-                System.out.println("tinsphp 2 " + i + ": " + (stop - start));
             }
+            System.out.println(names[i % writers.length] + " " + i + ": " + time);
         } else {
             System.err.println("Error occurred");
             writeToErr(process.getInputStream());
