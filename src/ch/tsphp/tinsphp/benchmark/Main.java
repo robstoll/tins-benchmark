@@ -26,23 +26,23 @@ public class Main
                 "t0_java",
                 "t0_sequential",
                 "t0_parallel_32",
-//                "t1_java",
-//                "t1_sequential",
-//                "t1_parallel_32",
-//                "t2_java",
-//                "t2_sequential",
-//                "t2_parallel_32",
+                "t1_java",
+                "t1_sequential",
+                "t1_parallel_32",
+                "t2_java",
+                "t2_sequential",
+                "t2_parallel_32",
         };
         PrintWriter[] writers = new PrintWriter[]{
                 new PrintWriter("tmp/t0_java_" + date + ".txt", "UTF-8"),
                 new PrintWriter("tmp/t0_sequential_" + date + ".txt", "UTF-8"),
                 new PrintWriter("tmp/t0_parallel_32_" + date + ".txt", "UTF-8"),
-//                new PrintWriter("tmp/t1_java_" + date + ".txt", "UTF-8"),
-//                new PrintWriter("tmp/t1_sequential_" + date + ".txt", "UTF-8"),
-//                new PrintWriter("tmp/t1_parallel_32_" + date + ".txt", "UTF-8"),
-//                new PrintWriter("tmp/t2_java_" + date + ".txt", "UTF-8"),
-//                new PrintWriter("tmp/t2_sequential_" + date + ".txt", "UTF-8"),
-//                new PrintWriter("tmp/t2_parallel_32_" + date + ".txt", "UTF-8"),
+                new PrintWriter("tmp/t1_java_" + date + ".txt", "UTF-8"),
+                new PrintWriter("tmp/t1_sequential_" + date + ".txt", "UTF-8"),
+                new PrintWriter("tmp/t1_parallel_32_" + date + ".txt", "UTF-8"),
+                new PrintWriter("tmp/t2_java_" + date + ".txt", "UTF-8"),
+                new PrintWriter("tmp/t2_sequential_" + date + ".txt", "UTF-8"),
+                new PrintWriter("tmp/t2_parallel_32_" + date + ".txt", "UTF-8"),
         };
         ProcessBuilder[] builders = new ProcessBuilder[]{
                 new ProcessBuilder("javac",
@@ -65,45 +65,45 @@ public class Main
                         "\"D:\\tins-benchmark\\src\\test0.php\"",
                         "\"D:\\tins-benchmark\\tmp\\test.tsphp\""),
                 //
-//                new ProcessBuilder("javac",
-//                        "-d", "\"D:\\tins-benchmark\\tmp\"",
-//                        "\"D:\\tins-benchmark\\src\\Test1.java\"",
-//                        "-J-Xms64m",
-//                        "-J-Xmx128m"),
-//                new ProcessBuilder("java",
-//                        "-cp", "\"D:\\tins-benchmark\\lib\\*\"",
-//                        "-Xms64m",
-//                        "-Xmx128m",
-//                        "ch.tsphp.tinsphp.Main",
-//                        "\"D:\\tins-benchmark\\src\\test1.php\"",
-//                        "\"D:\\tins-benchmark\\tmp\\test.tsphp\""),
-//                new ProcessBuilder("java",
-//                        "-cp", "\"D:\\tins-benchmark\\parallel_lib\\*\"",
-//                        "-Xms64m",
-//                        "-Xmx128m",
-//                        "ch.tsphp.tinsphp.Main",
-//                        "\"D:\\tins-benchmark\\src\\test1.php\"",
-//                        "\"D:\\tins-benchmark\\tmp\\test.tsphp\""),
-//                //
-//                new ProcessBuilder("javac",
-//                        "-d", "\"D:\\tins-benchmark\\tmp\"",
-//                        "\"D:\\tins-benchmark\\src\\Test2.java\"",
-//                        "-J-Xms64m",
-//                        "-J-Xmx128m"),
-//                new ProcessBuilder("java",
-//                        "-cp", "\"D:\\tins-benchmark\\lib\\*\"",
-//                        "-Xms64m",
-//                        "-Xmx128m",
-//                        "ch.tsphp.tinsphp.Main",
-//                        "\"D:\\tins-benchmark\\src\\test2.php\"",
-//                        "\"D:\\tins-benchmark\\tmp\\test.tsphp\""),
-//                new ProcessBuilder("java",
-//                        "-cp", "\"D:\\tins-benchmark\\parallel_lib\\*\"",
-//                        "-Xms64m",
-//                        "-Xmx128m",
-//                        "ch.tsphp.tinsphp.Main",
-//                        "\"D:\\tins-benchmark\\src\\test2.php\"",
-//                        "\"D:\\tins-benchmark\\tmp\\test.tsphp\""),
+                new ProcessBuilder("javac",
+                        "-d", "\"D:\\tins-benchmark\\tmp\"",
+                        "\"D:\\tins-benchmark\\src\\Test1.java\"",
+                        "-J-Xms64m",
+                        "-J-Xmx128m"),
+                new ProcessBuilder("java",
+                        "-cp", "\"D:\\tins-benchmark\\lib\\*\"",
+                        "-Xms64m",
+                        "-Xmx128m",
+                        "ch.tsphp.tinsphp.Main",
+                        "\"D:\\tins-benchmark\\src\\test1.php\"",
+                        "\"D:\\tins-benchmark\\tmp\\test.tsphp\""),
+                new ProcessBuilder("java",
+                        "-cp", "\"D:\\tins-benchmark\\parallel_lib\\*\"",
+                        "-Xms64m",
+                        "-Xmx128m",
+                        "ch.tsphp.tinsphp.Main",
+                        "\"D:\\tins-benchmark\\src\\test1.php\"",
+                        "\"D:\\tins-benchmark\\tmp\\test.tsphp\""),
+                //
+                new ProcessBuilder("javac",
+                        "-d", "\"D:\\tins-benchmark\\tmp\"",
+                        "\"D:\\tins-benchmark\\src\\Test2.java\"",
+                        "-J-Xms64m",
+                        "-J-Xmx128m"),
+                new ProcessBuilder("java",
+                        "-cp", "\"D:\\tins-benchmark\\lib\\*\"",
+                        "-Xms64m",
+                        "-Xmx128m",
+                        "ch.tsphp.tinsphp.Main",
+                        "\"D:\\tins-benchmark\\src\\test2.php\"",
+                        "\"D:\\tins-benchmark\\tmp\\test.tsphp\""),
+                new ProcessBuilder("java",
+                        "-cp", "\"D:\\tins-benchmark\\parallel_lib\\*\"",
+                        "-Xms64m",
+                        "-Xmx128m",
+                        "ch.tsphp.tinsphp.Main",
+                        "\"D:\\tins-benchmark\\src\\test2.php\"",
+                        "\"D:\\tins-benchmark\\tmp\\test.tsphp\""),
         };
         for (ProcessBuilder builder : builders) {
             builder.redirectErrorStream(true);
@@ -142,10 +142,12 @@ public class Main
                 break;
             }
             File file;
-            if (i % 3 == 0){
+            if (i % 9 == 0){
                 file = new File("D:\\tins-benchmark\\tmp\\Test0.class");
-//            }else if (i % 8 == 4) {
-//                file = new File("D:\\tins-benchmark\\tmp\\Test2.class");
+            }else if (i % 9 == 3) {
+                file = new File("D:\\tins-benchmark\\tmp\\Test1.class");
+            }else if (i % 9 == 6) {
+                file = new File("D:\\tins-benchmark\\tmp\\Test2.class");
             }else {
                 file = new File("D:\\tins-benchmark\\tmp\\test.tsphp");
             }
